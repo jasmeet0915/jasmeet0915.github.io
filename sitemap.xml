@@ -2,9 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://jasmeet0915.github.io/categories/</loc>
-  </url><url>
     <loc>https://jasmeet0915.github.io/</loc>
+    <lastmod>2019-12-23T20:56:42+06:00</lastmod>
+  </url><url>
+    <loc>https://jasmeet0915.github.io/projects/</loc>
+    <lastmod>2019-12-23T20:56:42+06:00</lastmod>
+  </url><url>
+    <loc>https://jasmeet0915.github.io/projects/real_harry_potter_wand/</loc>
+    <lastmod>2019-12-23T20:56:42+06:00</lastmod>
+  </url><url>
+    <loc>https://jasmeet0915.github.io/projects/kio-tape-2-copy/</loc>
+    <lastmod>2019-12-23T20:56:42+06:00</lastmod>
+  </url><url>
+    <loc>https://jasmeet0915.github.io/categories/</loc>
   </url><url>
     <loc>https://jasmeet0915.github.io/tags/</loc>
   </url>
