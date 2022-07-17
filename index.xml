@@ -8,28 +8,6 @@
       <url>https://jasmeet0915.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://jasmeet0915.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 23 Dec 2019 20:56:42 +0600</lastBuildDate><atom:link href="https://jasmeet0915.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Real Harry Potter Wand with OpenCV</title>
-      <link>https://jasmeet0915.github.io/projects/real_harry_potter_wand/</link>
-      <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>
-      
-      <guid>https://jasmeet0915.github.io/projects/real_harry_potter_wand/</guid>
-      <description>Inspired from the Interactive Wands at Wizarding World of Harry Potter in Universal Studios, this project is a DIY version of those wands made using Computer Vision, Machine Learning, a Raspberry Pi and some other basic electronics. This project allows its user to open/close a box with the correct flicks of a retro-reflector tipped Harry Potter Wand. Watch the Video of the project in action.
-The project was well recieved on the Instructables and Hackster community.</description>
-    </item>
-    
-    <item>
-      <title>S.T.A.R: Satellite Trajectory Animation &amp; Rendering</title>
-      <link>https://jasmeet0915.github.io/projects/kio-tape-2-copy/</link>
-      <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>
-      
-      <guid>https://jasmeet0915.github.io/projects/kio-tape-2-copy/</guid>
-      <description>This project is an attempt at creating cool looking yet &amp;lsquo;Scientifically Correct Orbital Simulations&amp;rsquo; for any satellite you want using Blender and Python. Currently this project simulates around 340 Starlink Satellites launched by SpaceX using a simple 2-body interaction between the Earth &amp;amp; Satellite.
-The future iterations of the project will also take into account various perturbations like the oblateness of Earth, atmospheric drag, gravitational effect of Jupiter etc.
-Watch the Video to see the project in action.</description>
-    </item>
-    
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://jasmeet0915.github.io/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
