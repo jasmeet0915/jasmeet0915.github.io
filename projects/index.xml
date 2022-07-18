@@ -11,6 +11,44 @@
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 23 Dec 2019 20:56:42 +0600</lastBuildDate><atom:link href="https://jasmeet0915.github.io/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>S.T.E.W.A.R.D</title>
+      <link>https://jasmeet0915.github.io/projects/steward/</link>
+      <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/projects/steward/</guid>
+      <description>One of the most unique &amp;amp; challenging problems I have worked on was during the Rally-to-Tally hackathon by Mitsubishi America. It was organized last year with an inventory management-based problem statement of counting a large number of industrial steel pipes with diameters ranging from 2 to 48 inches in an open warehouse spread over acres of land. Being from a robotics background, I knew that a robot would be the best candidate to do such a job with speed, accuracy &amp;amp; ease.</description>
+    </item>
+    
+    <item>
+      <title>Functional Weeder</title>
+      <link>https://jasmeet0915.github.io/projects/functional_weeder/</link>
+      <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/projects/functional_weeder/</guid>
+      <description>Functional Weeder (I am talking about the &amp;lsquo;unwanted plants&amp;rsquo; in agricultural fields, just to be clear 😒) was a bot made during the Eyantra Robotics Competition of 2021-22. This challenge comprised of creating a fleet of agricultural robots that could autonomously perform tedious tasks like planting seeds &amp;amp; removing weeds. The software for the robot including all algorithms, hardware interface, communication with dashboard, etc. all had to written using Elixir which is a functional programming language.</description>
+    </item>
+    
+    <item>
+      <title>Sahayak Bot</title>
+      <link>https://jasmeet0915.github.io/projects/sahayak_bot/</link>
+      <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/projects/sahayak_bot/</guid>
+      <description>Sahayak Bot was my first every project using ROS and was creating during the Eyantra Robotics Compeition 2020-21. The aim of the challenge was to develop the software stack for a mobile robot that could autonomously navigate a office environment and deliver things from room to room using Pick &amp;amp; Place and Object Recognition &amp;amp; Localization.
+The project was based on ROS melodic and simulated on Gazebo. It uses:</description>
+    </item>
+    
+    <item>
+      <title>S.T.A.R: Satellite Trajectory Animation &amp; Rendering</title>
+      <link>https://jasmeet0915.github.io/projects/star/</link>
+      <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/projects/star/</guid>
+      <description>This project is an attempt at creating cool looking yet &amp;lsquo;Scientifically Correct Orbital Simulations&amp;rsquo; for any satellite you want using Blender and Python. Currently this project simulates around 340 Starlink Satellites launched by SpaceX using a simple 2-body interaction between the Earth &amp;amp; Satellite.
+The future iterations of the project will also take into account various perturbations like the oblateness of Earth, atmospheric drag, gravitational effect of Jupiter etc.</description>
+    </item>
+    
+    <item>
       <title>Real Harry Potter Wand with OpenCV</title>
       <link>https://jasmeet0915.github.io/projects/real_harry_potter_wand/</link>
       <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>
@@ -18,17 +56,6 @@
       <guid>https://jasmeet0915.github.io/projects/real_harry_potter_wand/</guid>
       <description>Inspired from the Interactive Wands at Wizarding World of Harry Potter in Universal Studios, this project is a DIY version of those wands made using Computer Vision, Machine Learning, a Raspberry Pi and some other basic electronics. This project allows its user to open/close a box with the correct flicks of a retro-reflector tipped Harry Potter Wand. Watch the Video of the project in action.
 The project was well recieved on the Instructables and Hackster community.</description>
-    </item>
-    
-    <item>
-      <title>S.T.A.R: Satellite Trajectory Animation &amp; Rendering</title>
-      <link>https://jasmeet0915.github.io/projects/kio-tape-2-copy/</link>
-      <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>
-      
-      <guid>https://jasmeet0915.github.io/projects/kio-tape-2-copy/</guid>
-      <description>This project is an attempt at creating cool looking yet &amp;lsquo;Scientifically Correct Orbital Simulations&amp;rsquo; for any satellite you want using Blender and Python. Currently this project simulates around 340 Starlink Satellites launched by SpaceX using a simple 2-body interaction between the Earth &amp;amp; Satellite.
-The future iterations of the project will also take into account various perturbations like the oblateness of Earth, atmospheric drag, gravitational effect of Jupiter etc.
-Watch the Video to see the project in action.</description>
     </item>
     
   </channel>

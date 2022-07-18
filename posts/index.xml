@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts on Jasmeet Singh</title>
+    <link>https://jasmeet0915.github.io/posts/</link>
+    <description>Recent content in Posts on Jasmeet Singh</description>
+    <image>
+      <url>https://jasmeet0915.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://jasmeet0915.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://jasmeet0915.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Getting Less than 50% Duty Cycle with 555 Timer in Astable Mode</title>
+      <link>https://jasmeet0915.github.io/posts/less_than_50_duty_cycle_555/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/posts/less_than_50_duty_cycle_555/</guid>
+      <description>Desc Text.</description>
+    </item>
+    
+  </channel>
+</rss>
