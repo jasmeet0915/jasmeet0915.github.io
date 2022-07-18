@@ -191,11 +191,12 @@
     margin-right: 10px;
   }
   .site-project-pagination .pagination .page-item .page-link {
+    background-color: #fff;
     font-size: 24px;
     border-radius: 0;
     border: none;
     padding: 12px 20px;
-    color: #00113E;
+    color: #000000;
     font-weight: 300;
     transition: all 0.3s ease;
   }
