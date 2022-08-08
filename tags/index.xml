@@ -10,11 +10,47 @@
     </image>
     <generator>Hugo -- gohugo.io</generator><atom:link href="https://jasmeet0915.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>first</title>
-      <link>https://jasmeet0915.github.io/tags/first/</link>
+      <title>555 Timer</title>
+      <link>https://jasmeet0915.github.io/tags/555-timer/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://jasmeet0915.github.io/tags/first/</guid>
+      <guid>https://jasmeet0915.github.io/tags/555-timer/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Astable</title>
+      <link>https://jasmeet0915.github.io/tags/astable/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/tags/astable/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Motor</title>
+      <link>https://jasmeet0915.github.io/tags/motor/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/tags/motor/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PWM</title>
+      <link>https://jasmeet0915.github.io/tags/pwm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/tags/pwm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Servo</title>
+      <link>https://jasmeet0915.github.io/tags/servo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/tags/servo/</guid>
       <description></description>
     </item>
     
