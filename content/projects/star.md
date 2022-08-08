@@ -7,7 +7,7 @@ image: "images/projects/star.jpg"
 category: ["Space | Blender | Python | Orbital Mechanics"]
 ---
 
-{{<figure src="/images/projects/star.gif" alt="steward" loading="eager" width="300">}}
+{{<figure src="/images/projects/star.gif" alt="steward" align="center" loading="eager" width="300">}}
 
 This project is an attempt at creating cool looking yet 'Scientifically Correct Orbital Simulations' for any satellite you want using Blender and Python.
 Currently this project simulates around 340 Starlink Satellites launched by SpaceX using a simple 2-body interaction between the Earth & Satellite. 
