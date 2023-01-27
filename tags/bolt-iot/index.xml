@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Bolt IOT on Jasmeet Singh</title>
+    <link>https://jasmeet0915.github.io/tags/bolt-iot/</link>
+    <description>Recent content in Bolt IOT on Jasmeet Singh</description>
+    <image>
+      <url>https://jasmeet0915.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://jasmeet0915.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://jasmeet0915.github.io/tags/bolt-iot/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Programming a Non-Programmable ESP8266 Board</title>
+      <link>https://jasmeet0915.github.io/posts/bolt_iot_programming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/posts/bolt_iot_programming/</guid>
+      <description>If you are like me, you want RGB lights in everything. Be it your mouse, your keyboard, or heck even your room. Therefore, to fulfill this colorful need, I started working on a project to install the addressable WS2812B LEDs to the shelves in my room. The plan was simple: use an ESP8266-based board (specifically the Wemos D1 Mini) with WLED installed as the main controller, hook it up the LEDs and use the WLED Android App to control the LEDs.</description>
+    </item>
+    
+  </channel>
+</rss>

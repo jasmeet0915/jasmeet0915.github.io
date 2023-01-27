@@ -39,6 +39,24 @@ The project was based on ROS melodic and simulated on Gazebo. It uses:</descript
     </item>
     
     <item>
+      <title>DIY 3D Printed Fume Extractor with USB Light</title>
+      <link>https://jasmeet0915.github.io/projects/3d_printed_fume_extractor/</link>
+      <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/projects/3d_printed_fume_extractor/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>DIY RGB Shelf Lights using ESP8266</title>
+      <link>https://jasmeet0915.github.io/projects/shelf_lights/</link>
+      <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/projects/shelf_lights/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
       <title>S.T.A.R: Satellite Trajectory Animation &amp; Rendering</title>
       <link>https://jasmeet0915.github.io/projects/star/</link>
       <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>

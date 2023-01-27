@@ -39,6 +39,24 @@ The project was based on ROS melodic and simulated on Gazebo. It uses:</descript
     </item>
     
     <item>
+      <title>DIY 3D Printed Fume Extractor with USB Light</title>
+      <link>https://jasmeet0915.github.io/projects/3d_printed_fume_extractor/</link>
+      <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/projects/3d_printed_fume_extractor/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>DIY RGB Shelf Lights using ESP8266</title>
+      <link>https://jasmeet0915.github.io/projects/shelf_lights/</link>
+      <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/projects/shelf_lights/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
       <title>S.T.A.R: Satellite Trajectory Animation &amp; Rendering</title>
       <link>https://jasmeet0915.github.io/projects/star/</link>
       <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>
@@ -66,6 +84,15 @@ The project was well recieved on the Instructables and Hackster community.</desc
       <guid>https://jasmeet0915.github.io/posts/making_servo_tester/</guid>
       <description>A couple months back, I decided to dive into some basic electronics and where better to start than the beloved 555 Timer IC ¯\_(ツ)_/¯. Being a strong believer of project-based learning, I decided to make a project using the timer instead of just cramming up the theory. Fast forwarding a couple weeks, here I present to you 555 Timer based Servo Tester 🎉
 555 Timer Servo Tester in action. Here I am controlling the base joint servo of a robotic arm &amp;amp; drive servo for a linear actuator mechanism on one of my mobile robots.</description>
+    </item>
+    
+    <item>
+      <title>Programming a Non-Programmable ESP8266 Board</title>
+      <link>https://jasmeet0915.github.io/posts/bolt_iot_programming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://jasmeet0915.github.io/posts/bolt_iot_programming/</guid>
+      <description>If you are like me, you want RGB lights in everything. Be it your mouse, your keyboard, or heck even your room. Therefore, to fulfill this colorful need, I started working on a project to install the addressable WS2812B LEDs to the shelves in my room. The plan was simple: use an ESP8266-based board (specifically the Wemos D1 Mini) with WLED installed as the main controller, hook it up the LEDs and use the WLED Android App to control the LEDs.</description>
     </item>
     
   </channel>
