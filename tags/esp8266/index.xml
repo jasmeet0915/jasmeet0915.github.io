@@ -11,10 +11,10 @@
     <generator>Hugo -- gohugo.io</generator><atom:link href="https://jasmeet0915.github.io/tags/esp8266/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Programming a Non-Programmable ESP8266 Board</title>
-      <link>https://jasmeet0915.github.io/posts/bolt_iot_programming/</link>
+      <link>https://jasmeet0915.github.io/posts/programming_esp12e/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://jasmeet0915.github.io/posts/bolt_iot_programming/</guid>
+      <guid>https://jasmeet0915.github.io/posts/programming_esp12e/</guid>
       <description>If you are like me, you want RGB lights in everything. Be it your mouse, your keyboard, or heck even your room. Therefore, to fulfill this colorful need, I started working on a project to install the addressable WS2812B LEDs to the shelves in my room. The plan was simple: use an ESP8266-based board (specifically the Wemos D1 Mini) with WLED installed as the main controller, hook it up the LEDs and use the WLED Android App to control the LEDs.</description>
     </item>
     
