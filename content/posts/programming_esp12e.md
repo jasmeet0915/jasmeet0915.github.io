@@ -38,9 +38,11 @@ editPost:
 
 If you are like me, you want RGB lights in everything. Be it your mouse, your keyboard, or heck even your room. Therefore, to fulfill this *colorful* need,  I started working on a project to install the addressable WS2812B LEDs to the shelves in my room. The plan was simple: use an ESP8266-based board (specifically the Wemos D1 Mini) with [WLED](https://kno.wled.ge/) installed as the main controller, hook it up the LEDs and use the WLED Android App to control the LEDs.
 
-So as with any project, I hopped on the metro, arrived at the local market and bought all the required stuff including the LED Strip, Wemos D1 Mini board, an IRF540N n-channel MOSFET, some JST Connectors and screw terminals etc. 
+{{<figure src="/images/blogs/bolt_iot/cover-3.jpg" width=600 loading="eager" align="center" caption="A sneak peek of the finished project">}}
 
-> If you are interested in making the project yourself, you can go through and follow the steps in my [Instructable]().
+> If you are interested in making the project yourself, you can go through and follow the steps in my [Instructable](https://www.instructables.com/DIY-RGB-Shelf-Lights-Using-ESP8266-WLED/).
+    
+So as with any project, I hopped on the metro, arrived at the local market and bought all the required stuff including the LED Strip, Wemos D1 Mini board, an IRF540N n-channel MOSFET, some JST Connectors and screw terminals etc. 
 
 Anyways, back to the story. So, after getting all the stuff I returned home, connected the Wemos D1 Mini to my laptop, selected the correct port in Arduino IDE and uploaded the blink LED sketch to test the board. Aaaaand it didn't work :(
 
