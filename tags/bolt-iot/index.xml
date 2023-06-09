@@ -8,7 +8,8 @@
       <url>https://jasmeet0915.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://jasmeet0915.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://jasmeet0915.github.io/tags/bolt-iot/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language><atom:link href="https://jasmeet0915.github.io/tags/bolt-iot/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Programming a Non-Programmable ESP8266 Board</title>
       <link>https://jasmeet0915.github.io/posts/programming_esp12e/</link>
