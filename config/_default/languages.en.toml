@@ -1,0 +1,26 @@
+languageCode = "en"
+languageName = "English"
+weight = 1
+title = "Jasmeet Singh"
+
+[params]
+  displayName = "Jasmeet Singh"
+  isoCode = "en"
+  rtl = false
+  dateFormat = "2 January 2006"
+  logo = "img/blowfish_logo_transparent.png"
+  description = "Robotics Engineer | Engineering Motion, Simulating Reality."
+
+[params.author]
+  name = "Jasmeet Singh"
+  email = "jasmeet0915@gmail.com"
+  image = "img/blowfish_logo.png"
+  headline = "Robotics Engineer | Engineering Motion, Simulating Reality."
+  bio = "Robotics Engineer | Engineering Motion, Simulating Reality."
+  links = [
+    { github = "https://github.com/jasmeet0915" },
+    { linkedin = "https://www.linkedin.com/in/jasmeetsingh2911/"},
+    { instagram = "https://www.instagram.com/debounsingh/"},
+    { youtube = "https://www.youtube.com/@processingh"},
+    { x-twitter = "https://x.com/debounSingh" }
+  ]
