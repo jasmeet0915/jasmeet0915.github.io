@@ -3,7 +3,7 @@ title: "Portfolio"
 draft: false
 description: "My academic and professional journey so far."
 slug: "users"
-tags: ["users", "sample"]
+tags: ["portfolio", "cv", "work", "experience", "education"]
 showDate: false
 showAuthor: false
 showReadingTime: false
