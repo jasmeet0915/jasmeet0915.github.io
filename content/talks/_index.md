@@ -1,7 +1,7 @@
 ---
 title: "Talks"
 description: "Highlights from conferences, community meetups, publications, and awards."
-layout: "list"
+cardView: false
 cascade:
   showReadingTime: false
   showDate: false
