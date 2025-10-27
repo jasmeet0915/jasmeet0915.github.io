@@ -1,5 +1,5 @@
 ---
-title: "Publications"
+title: "Art"
 draft: false
 description: "Some real-life Blowfish examples."
 slug: "users"
