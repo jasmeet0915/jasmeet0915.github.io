@@ -5,6 +5,7 @@ description: "Blogs"
 cascade:
   showDate: false
   showAuthor: false
+  showPagination: true
   invertPagination: true
 ---
 
