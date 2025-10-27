@@ -18,3 +18,5 @@ description: "This page was built using the Blowfish theme for Hugo."
   {{< /button >}}
 
 </div>
+
+{{< carousel images="projects_gallery/*" aspectRatio="16-9" interval="2500" >}}
