@@ -12,7 +12,7 @@ disableLanguages = [] #to allow translation work requiring shipping to productio
 enableRobotsTXT = true
 summaryLength = 30
 hasCJKLanguage = true
-timeout = 180
+timeout = 360
 
 buildDrafts = false
 buildFuture = false
