@@ -1,0 +1,26 @@
+{{ $recentArticles := 2 }}
+{{ $showMoreLinkDest := "/blogs/" }}
+{{ $recentsDest := "blogs" }}
+{{ $pages := where .Site.RegularPages "Type" $recentsDest }}
+{{ if index .Site.Params.homepage "showRecentItems" }}
+  {{ $recentArticles = .Site.Params.homepage.showRecentItems }}
+{{ end }}
+
+<h2 class="mt-8 text-2xl font-extrabold mb-10">Recent {{ title $recentsDest }}</h2>
+
+<section class="space-y-10 w-full">
+  {{ range first $recentArticles $pages }}
+    {{ partial "article-link/simple.html" . }}
+  {{ end }}
+</section>
+
+{{ if .Site.Params.homepage.showMoreLink | default false }}
+  <div class="mt-10 flex justify-center">
+    <a href="{{ $showMoreLinkDest }}">
+      <button
+        class="bg-transparent hover:text-primary-500 prose dark:prose-invert font-semibold py-2 px-4 border border-primary-500 hover:border-transparent rounded">
+        {{ i18n "recent.show_more" | markdownify }}
+      </button>
+    </a>
+  </div>
+{{ end }}
