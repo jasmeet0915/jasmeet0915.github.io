@@ -1,23 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>ESP8266 on Jasmeet Singh</title>
-    <link>https://jasmeet0915.github.io/tags/esp8266/</link>
-    <description>Recent content in ESP8266 on Jasmeet Singh</description>
-    <image>
-      <url>https://jasmeet0915.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>https://jasmeet0915.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
-    </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language><atom:link href="https://jasmeet0915.github.io/tags/esp8266/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Programming a Non-Programmable ESP8266 Board</title>
-      <link>https://jasmeet0915.github.io/posts/programming_esp12e/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://jasmeet0915.github.io/posts/programming_esp12e/</guid>
-      <description>If you are like me, you want RGB lights in everything. Be it your mouse, your keyboard, or heck even your room. Therefore, to fulfill this colorful need, I started working on a project to install the addressable WS2812B LEDs to the shelves in my room. The plan was simple: use an ESP8266-based board (specifically the Wemos D1 Mini) with WLED installed as the main controller, hook it up the LEDs and use the WLED Android App to control the LEDs.</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ESP8266 on Jasmeet Singh</title><link>https://localhost:1313/tags/esp8266/</link><description>Recent content in ESP8266 on Jasmeet Singh</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>jasmeet0915@gmail.com (Jasmeet Singh)</managingEditor><webMaster>jasmeet0915@gmail.com (Jasmeet Singh)</webMaster><copyright>Copyright © 2025 Jasmeet Singh</copyright><atom:link href="https://localhost:1313/tags/esp8266/index.xml" rel="self" type="application/rss+xml"/><item><title>Programming a Non-Programmable ESP8266 Board</title><link>https://localhost:1313/blogs/programming-non-programmable-esp/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>jasmeet0915@gmail.com (Jasmeet Singh)</author><guid>https://localhost:1313/blogs/programming-non-programmable-esp/</guid><description>&lt;div class="lead text-neutral-500 dark:text-neutral-400 !mb-9 text-xl"&gt;
+See how I repurposed the ESP module from a more or less useless and limited commercial board for my own project.
+&lt;/div&gt;
+&lt;p&gt;If you are like me, you want RGB lights in everything. Be it your mouse, your keyboard, or heck even your room. Therefore, to fulfill this &lt;em&gt;colorful&lt;/em&gt; need, I started working on a project to install the addressable WS2812B LEDs to the shelves in my room. The plan was simple: use an ESP8266-based board (specifically the Wemos D1 Mini) with &lt;a
+href="https://kno.wled.ge/"
+target="_blank"
+&gt;WLED&lt;/a&gt; installed as the main controller, hook it up the LEDs and use the WLED Android App to control the LEDs.&lt;/p&gt;</description><media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://localhost:1313/blogs/programming-non-programmable-esp/featured.jpg"/></item></channel></rss>
