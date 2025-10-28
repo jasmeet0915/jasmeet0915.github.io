@@ -3,7 +3,6 @@ title: "Making a Servo Tester with 555 Timer - Part 1"
 weight: 2
 draft: false
 description: "How to make servo tester using a 555 timer IC"
-slug: "installation"
 tags: ["blogs", "Servo", "Motor", "555 Timer", "PWM", "Astable"]
 series: ["Servo Tester"]
 series_order: 1
