@@ -8,13 +8,15 @@ title = "Jasmeet Singh"
   isoCode = "en"
   rtl = false
   dateFormat = "2 January 2006"
-  logo = "img/blowfish_logo_transparent.png"
+  logo = "img/transparent_ai_profile.png"
+  secondaryLogo = "img/transparent_ai_profile.png"
   description = "Robotics Engineer | Engineering Motion, Simulating Reality."
+  copyright = "Copyright © { year } Jasmeet Singh"
 
 [params.author]
   name = "Jasmeet Singh"
   email = "jasmeet0915@gmail.com"
-  image = "img/blowfish_logo.png"
+  image = "img/profile_photo.jpg"
   headline = "Robotics Engineer | Engineering Motion, Simulating Reality."
   bio = "Robotics Engineer | Engineering Motion, Simulating Reality."
   links = [
