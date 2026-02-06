@@ -3,7 +3,36 @@ title: "Welcome to my website!"
 description: "This page was built using the Blowfish theme for Hugo."
 ---
 
-<div style="display: inline-flex; gap: 12px;">
+<style>
+  /* Default layout – desktop and larger screens */
+.home-buttons {
+  display: inline-flex;
+  gap: 12px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .home-buttons {
+    flex-direction: column;   /* Stack buttons vertically */
+    width: 100%;              /* Take full width */
+  }
+
+  /* Make buttons easier to tap on phones */
+  .home-buttons .button {
+    width: 100%;              /* Full-width buttons */
+    text-align: center;
+    padding: 14px 18px;       /* Larger tap area */
+    font-size: 1rem;          /* Slightly larger text for readability */
+  }
+
+  /* Extra spacing between stacked buttons */
+  .home-buttons {
+    gap: 16px;
+  }
+}
+</style>
+
+<div class="home-buttons">
 
   {{< button href="https://drive.google.com/uc?export=download&id=1C19a-loYY-ZQVA4GQI4dyVyafnPgl2X0" target="_self" >}}
   Download CV ↓
@@ -13,7 +42,7 @@ description: "This page was built using the Blowfish theme for Hugo."
   Instructables ↗
   {{< /button >}}
 
-  {{< button href="https://atomroboticslab.vercel.app/" target="_self" >}}
+  {{< button href="https://github.com/atom-robotics-lab" target="_self" >}}
   A.T.O.M Robotics Lab ↗
   {{< /button >}}
 
