@@ -13,7 +13,9 @@ This is going to be a long one folks! But I bet that at the end you'll have much
 
 Ever since I did GSoC with Gazebo, Open Robotics back in 2023 (read the official press release [here](https://www.openrobotics.org/blog/2023/6/14/2023-google-summer-of-code-students)), a majority portion of my DMs are full of students seeking guidance on how to contribute to Gazebo and/or participate in GSoC with Open Robotics. I have also met countless number of people interested in expanding Gazebo's functionality for their specific use cases whether its work, personal projects or just for the fun of it.
 
-> **Note:** Whenever I say "Gazebo" in this blog, I am referring to the new Gazebo unless specified otherwise (Classic Gazebo).
+{{< alert "lightbulb" >}}
+**Note:** Whenever I say "Gazebo" in this blog, I am referring to the new Gazebo unless specified otherwise (Classic Gazebo).
+{{< /alert >}}
 
 Being someone who started working on advanced robotics when the whole world was shutdown with quarantine, Gazebo was my only source to research, experiment and develop projects. Even some of my initial work experiences (internships) were completely remote and surrounded around developing robotic applications purely on simulation. Therefore, I did my best (and am still doing) to get the hang of simulation-based robotics and how Gazebo fits into that paradigm as one most widely used open source robotics simulator.
 
@@ -25,9 +27,11 @@ Based on my experience, the best way to achieve this, is to get into the nitty-g
 
 For me, [this](https://github.com/gazebosim/gz-sim/issues/1057) was the first ever issue I fixed in gazebo which allowed a user to have custom topics for the `JointStatePublisher` system plugin. This was followed by a couple of minor fixes, Gazebo Garden's Tutorial Party and [this](https://github.com/gazebosim/gz-sim/issues/1909) issue for porting the `LensFlare` plugin from Classic Gazebo to the new Gazebo. This became my segue into the journey of developing custom plugins and features for Gazebo.
 
-To make the segue a bit easier for others, I aim to provide a detailed guide to writing system plugins for Gazebo with this blog. I'll be taking my newest plugin, [`gz_sim_led_plugin`](https://github.com/jasmeet0915/gz_sim_led_plugin) which allows you to simulate LEDs/Indicators in Gazebo, as a reference for the same.
+To make the segue a bit easier for others, I aim to provide a detailed guide to writing system plugins for Gazebo with this blog. I'll be taking my newest plugin, [**gz_sim_led_plugin**](https://github.com/jasmeet0915/gz_sim_led_plugin) which allows you to simulate LEDs/Indicators in Gazebo, as a reference for the same.
 
->**Note:** Do consider trying out the plugin. Issues, PRs, Stars are always welcome :)
+{{< alert "github" >}}
+Do consider trying out the [plugin]([`gz_sim_led_plugin`](https://github.com/jasmeet0915/gz_sim_led_plugin)). Issues, PRs, Stars are always welcome :)
+{{< /alert >}}
 
 ## A (Very) Brief Introduction to Gazebo
 In this section, we are going to discuss the basic architecture and terminologies that you need as a precursor for making your own plugins. If you are already aware of the basics, feel free to skip this section.
@@ -36,7 +40,44 @@ In this section, we are going to discuss the basic architecture and terminologie
 Well, its a Robotics Simulator, duh. But that is a user's perspective. What about from a developer's perspective? From a developer's perspective, Gazebo is a collection of [numerous C++ libraries](https://gazebosim.org/libs/) (16 to be precise) that work together to make every thing possible from physics, rendering, GUI, CLI, SDFormat parsing, etc. Libraries such as [`gz-physics`](https://github.com/gazebosim/gz-physics), [`gz-rendering`](https://github.com/gazebosim/gz-rendering) act as an abstraction that allows Gazebo to work with different physics and rendering engine making it hugely customizable. Libraries such as [`gz-sim`](https://github.com/gazebosim/gz-sim) and [`gz-gui`](https://github.com/gazebosim/gz-gui) act as the backend and frontend respectively, while [`gz-transport`](https://github.com/gazebosim/gz-transport) and [`gz-msgs`](https://github.com/gazebosim/gz-msgs) enables the communication between different sub systems of Gazebo using topics and services (much like ROS / ROS 2). I can go on but I hope you get the idea.
 
 ### Gazebo's Architecture, Terminologies and Plugins
-There is a very handy official doc from Gazebo which explains the complete [architecture](https://gazebosim.org/docs/latest/architecture/) and [terminologies](https://gazebosim.org/api/gazebo/3/terminology.html) in detail. For the sake of keeping things short here, I would suggest you read the linked docs with extra focus on understanding the following w.r.t Gazebo: client-server & plugin-based architecture, Entity, Components, Entity Component Manager (ECM), Simulation Loop, Simulation Events (PreUpdate, PostUpdate, Configure) and system plugins.
+There is a very handy official doc from Gazebo which explains the complete [architecture](https://gazebosim.org/docs/latest/architecture/) and [terminologies](https://gazebosim.org/api/gazebo/3/terminology.html) in detail. For the sake of keeping things short here, I would suggest you read the linked docs with extra focus on understanding the following w.r.t Gazebo: client-server & plugin-based architecture, Entity, Components, Entity Component Manager (ECM), Simulation Loop, Simulation Events, [System Plugin](https://gazebosim.org/api/sim/8/createsystemplugins.html) and Plugin Interfaces(PreUpdate, PostUpdate, Configure).
+
+### System Plugins & Interfaces:
+Since this blog is about making system plugins, let's discuss about them in a bit detail.
+
+A plugin, by definition, is a piece of software which can be "plugged in" to an existing software to modify its runtime behavior or extend its functionality. Gazebo also offers a similar plugin-based architecture where we can load such  "System Plugins" dynamically in association with any entity in our simulation world. You can find a list of all the system plugins that come with Gazebo by default [here](https://github.com/gazebosim/gz-sim/tree/gz-sim10/src/systems). Whenever Gazebo parses an SDF world, it looks for the:
+
+```xml
+<plugin filename="libMyPlugin.so" name="MyPluginClass">
+...
+</plugin>
+```
+From this snippet, the `filename` attribute provides the name of the shared library to load for the plugin and the `name` attribute provides the name with which the plugin's class was registered in the source code. These details help Gazebo to load the plugin as an instance at runtime and call its functions to reap the fruits of the extra functionality it adds. All this registering and dynamic loading of the plugins is handled with the [`gz-plugin`](https://gazebosim.org/libs/plugin/) library which is yet another library in Gazebo's aresenal.
+
+Now the question comes, how does Gazebo execute the functionality of the plugin? Since a plugin can be made by anyone, how does Gazebo know which functions of the plugin instance to call and when?
+
+This is where the **interfaces** come in. An interface, like the name implies, acts as a fixed interface between Gazebo and the plugins such that Gazebo can execute their functionality without caring about how they have been implemented. As long as the interfaces are there, the plugin can show its abilities. These interfaces are basically functions with a fixed signature that the plugin can implement as these are the functions which Gazebo would be calling for each of the loaded plugins at different points of time during the simulation loop. Below is the list of different available interfaces:
+
+#### ISystemConfigure
+This interface is **executed once** when the **plugin is loaded** by Gazebo. This where we get our parsed SDF description as `sdf::ElementConstPtr` which we can use to configure our plugin with any user provided settings. In addition to that, this interface also receives a pointer to the `gz::sim::EntityComponentManager` which can be used to read/write any kind of data for any kind of entity you want.
+
+**For instance,** the [**DiffDrive**](https://github.com/gazebosim/gz-sim/blob/3c6627421498f66ef755a2becb2b1c3924621955/src/systems/diff_drive/DiffDrive.cc#L170) system plugin uses the **ISystemConfigure** to read the user settings like `<wheel_separation>`, `<wheel_radius>`, `<max_linear_velocity>`, etc.
+
+#### ISystemPreUpdate
+This is interface is **executed periodically** by Gazebo right **before physics run** in **every step of the simulation loop**. This is where you would want your plugin to apply any changes or modifications (apply force, velocity, controls, etc.) to any entity in the simulation. You can then see the effects of that change during that simulations step. This interface receieves a `gz::sim::UpdateInfo` instance which you you can use to access things like `simTime`. Similar to the **ISystemConfigure**, you also get the `gz::sim::EntityComponentManager` here for reading/writing any information cany kind of data to any entity you want.
+
+**For instance,** the [ApplyJointForce](https://github.com/gazebosim/gz-sim/blob/gz-sim10/src/systems/apply_joint_force/ApplyJointForce.cc) system plugin uses the **ISystemPreUpdate** interface to apply a force to the joint entity with the name `<joint_name>` using the [JointForceCmd](https://gazebosim.org/api/sim/10/jointforcecmdcomponent.html) component. Similarly, the [**DiffDrive**](https://github.com/gazebosim/gz-sim/blob/3c6627421498f66ef755a2becb2b1c3924621955/src/systems/diff_drive/DiffDrive.cc#L390) plugin uses the **ISystemPreUpdate** to apply velocity commands to the required joints using the **JointVelocityCmd** component.
+
+#### ISystemPostUpdate
+Like the name suggests, this interface is **executed periodically** by Gazebo right at the **end of each simulation step**. This interface carries the same signature as the **ISystemPreUpdate** with one difference that it is read-only, i.e, you cannot write any changes to entities in this function. Ideally this where you would want to see the results of actions that occur during the current simulation step like state changes (pose, velocity, etc.), sensor readings, etc.
+
+**For instance,** the [JointStatePublisher](https://github.com/gazebosim/gz-sim/blob/3c6627421498f66ef755a2becb2b1c3924621955/src/systems/joint_state_publisher/JointStatePublisher.cc#L139) system plugin uses the **ISystemPostUpdate** interface to read the joint states and publish them on a topic at the end of every simulation step after the physics has already acted. Similarly, the [**DiffDrive**](https://github.com/gazebosim/gz-sim/blob/3c6627421498f66ef755a2becb2b1c3924621955/src/systems/diff_drive/DiffDrive.cc#L497) plugin uses the **ISystemPostUpdate** to read the joint position and speeds for updating and publishing the odometry.
+
+Apart from these 3 interfaces, there are also `ISystemUpdate` and `ISystemReset` interfaces that are pretty self explanatory but you can read more about them [here](https://gazebosim.org/api/sim/10/createsystemplugins.html). In our case, we would only be using the the above 3 listed plugins.
+
+### The special case of Visual Plugins
+Now system plugins in Gazebo generally tend to avoid making changes in the visual appearances of any entities in the simulation. Why? Well, Gazebo can have upto 2 scenes at a time: one on the server side () and the other on the client (or GUI) side. Generic system plugins generally  
+
 
 Now let's begin!
 
@@ -186,4 +227,12 @@ Now this snippet will act as a nice blueprint for the development of our actual 
 
 #### A High Level DFD
 
-In this step we will come with a high level DFD (Data Flow Diagram). This would help us in planning 
+In this step we will come with a high level DFD (Data Flow Diagram). This would help us in linking our SDF snippet with software-level components of Gazebo.
+
+{{<figure src="high_level_dfd.png" width=800 loading="eager" align="center" caption="High Level DFD of the whole plugin.">}}
+
+Let's briefly talk about each of the different components in our DFD above:
+
+- SDF File: This is our world file which provides our world description containing the models and plugins
+- Gazebo: This is, well, Gazebo which is the central part in this whole flow. It acts as the conductor in our Gazebo orchestra doing jobs such as parsing the SDF file, loading plugins, calling the plugin's interface functions, and running the simulation loop; basically everything.
+- LedPlugin::Configure(): 
