@@ -75,13 +75,23 @@ Like the name suggests, this interface is **executed periodically** by Gazebo ri
 
 Apart from these 3 interfaces, there are also `ISystemUpdate` and `ISystemReset` interfaces that are pretty self explanatory but you can read more about them [here](https://gazebosim.org/api/sim/10/createsystemplugins.html). In our case, we would only be using the the above 3 listed plugins.
 
-### The special case of Visual Plugins
-Now system plugins in Gazebo generally tend to avoid making changes in the visual appearances of any entities in the simulation. Why? Well, Gazebo can have upto 2 scenes at a time: one on the server side () and the other on the client (or GUI) side. Generic system plugins generally  
+### The special case of Visual Plugins: A (Short) Case Study
+System plugins in Gazebo are loaded and executed on the server side. Therefore, they generally tend to avoid making changes in the visual appearances of any entities in the simulation. Why? Well, because Gazebo can have upto 2 scenes at a time: one on the server side (for simulating sensors like lidar, camera, etc. and also allowing headless support in Gazebo) and the other on the client (or GUI) side which is what you see as the user. Since the system plugins are loaded and executed on the server side, they only act on the server scene! If you want the plugin to act on the user side scene (basically change the simulation appearances in the GUI), then you would need a client side plugin.
 
+That is pricisely why we need a separate GUI plugin to VisualizeLidar in Gazebo GUI or the ImageDisplay plugin to visualize the Camera Data in GUI. This also means that if you have a system plugin which updates the visuals of a model, the changes might not be visible in the GUI. But you would still be able to visualize it from the camera! Don't believe me? Have a look here:
+
+[!insert issue gif here]
+Explain context of gif here
+
+This means if you want to have a plugin which updates the scene on both: the GUI so you as a user can see that and the server side so your camera sensors can see the change, you would need the plugin to be loaded on both sides. This is where visual system plugins in Gazebo step up. These are plugins which are loaded from inside the `<visual>` element of any `<link>`. These plugins are by default loaded on both sides so you don't have to load them twice manually. The [ShaderParam](https://github.com/gazebosim/gz-sim/blob/gz-sim10/examples/worlds/shader_param.sdf) plugin would be a good example of such visual system plugins.
+
+So for our use case (making a plugin which can simulate LEDs in Gazebo), visual system plugins seem like an obvious choice. However, there is a catch. If your plugin advertised a service (which is a one-to-many communication by nature), you would end up having 2 instances of the plugin advertising a service with the same name leading to unexpected behavior as you don't know which instance's callback would be executed on a request! This is what happened with me in a previous version of my LED plugin and you can read more about it from [here](https://github.com/gazebosim/gz-sim/issues/3207#issuecomment-3691392921).
+
+Since there was no satisfactory solution for this issue, I had to completely ditch the idea of using a **Visual System Plugin** and go with a generic system plugin which utilises the [VisualCmd](https://gazebosim.org/api/sim/9/namespacegz_1_1sim_1_1components.html#a8fc4552b2462d65dcf872beab6cff4dc) and [LightCmd](https://gazebosim.org/api/sim/9/namespacegz_1_1sim_1_1components.html#ad16cb8d23fb585fa75aef5266b3986e2) components for the respective visual and light entities of the "LEDs" in our plugin (This is explained in more detail later).
 
 Now let's begin!
 
-## Making System Plugin for Gazebo
+## Making System Plugins for Gazebo
 
 ### The LED Plugin: Understanding Our Reference
 
