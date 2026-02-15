@@ -11,11 +11,13 @@ series_order: 1
 This is going to be a long one folks! But I bet that at the end you'll have much more insights into Gazebo, and how to add your own functionality to it via custom plugins. You might also learn a thing or two about programming along the way. I'll do my best to make it worth your time :)
 {{< /lead >}}
 
-Ever since I did GSoC with Gazebo, Open Robotics back in 2023 (read the official press release [here](https://www.openrobotics.org/blog/2023/6/14/2023-google-summer-of-code-students)), a majority portion of my DMs are full of students seeking guidance on how to contribute to Gazebo and/or participate in GSoC with Open Robotics. I have also met countless number of people interested in expanding Gazebo's functionality for their specific use cases whether its work, personal projects or just for the fun of it.
-
 {{< alert "lightbulb" >}}
 **Note:** Whenever I say "Gazebo" in this blog, I am referring to the new Gazebo unless specified otherwise (Classic Gazebo).
 {{< /alert >}}
+
+Like any other blog, let's just start by quickly covering the "Why does it matter?" part.
+
+Ever since I did GSoC with Gazebo, Open Robotics back in 2023 (read the official press release [here](https://www.openrobotics.org/blog/2023/6/14/2023-google-summer-of-code-students)), a majority portion of my DMs are full of students seeking guidance on how to contribute to Gazebo and/or participate in GSoC with Open Robotics. I have also met countless number of people (which also includes myself) interested in expanding Gazebo's functionality for their specific use cases be it: (Add examples for some special use cases that might need plugins).
 
 Being someone who started working on advanced robotics when the whole world was shutdown with quarantine, Gazebo was my only source to research, experiment and develop projects. Even some of my initial work experiences (internships) were completely remote and surrounded around developing robotic applications purely on simulation. Therefore, I did my best (and am still doing) to get the hang of simulation-based robotics and how Gazebo fits into that paradigm as one most widely used open source robotics simulator.
 
@@ -25,9 +27,13 @@ Based on my experience, the best way to achieve this, is to get into the nitty-g
 - Participate in Gazebo Tutorial Party which happens after every release. And you get free a Gazebo t-shirt if you are on the leaderboard towards the end of of the Party. Not to brag, but I have 2 of them :)
 - Then move on to the bigger issues related to open bugs, enhancements, etc.
 
-For me, [this](https://github.com/gazebosim/gz-sim/issues/1057) was the first ever issue I fixed in gazebo which allowed a user to have custom topics for the `JointStatePublisher` system plugin. This was followed by a couple of minor fixes, Gazebo Garden's Tutorial Party and [this](https://github.com/gazebosim/gz-sim/issues/1909) issue for porting the `LensFlare` plugin from Classic Gazebo to the new Gazebo. This became my segue into the journey of developing custom plugins and features for Gazebo.
+For me, [this](https://github.com/gazebosim/gz-sim/issues/1057) was the first ever issue I fixed in gazebo which allowed a user to have custom topics for the `JointStatePublisher` system plugin. This was followed by a couple of minor fixes, Gazebo Garden's Tutorial Party and [this](https://github.com/gazebosim/gz-sim/issues/1909) issue for porting the `LensFlare` plugin from Classic Gazebo to the new Gazebo. This became my segue into the journey of developing custom plugins and features for Gazebo and granted me the power to develop and satisfy different use cases in simulation (give examples)
 
 To make the segue a bit easier for others, I aim to provide a detailed guide to writing system plugins for Gazebo with this blog. I'll be taking my newest plugin, [**gz_sim_led_plugin**](https://github.com/jasmeet0915/gz_sim_led_plugin) which allows you to simulate LEDs/Indicators in Gazebo, as a reference for the same.
+
+{{< github repo="jasmeet0915/gz_sim_led_plugin" showThumbnail=false >}}
+
+{{<figure src="gazebo_led_plugin_demo.gif" width=800 loading="eager" align="center" caption="Demo gif of the plugin in action showing 2 robots and an industrial tower lamp model each having different LED group with different modes.">}}
 
 {{< alert "github" >}}
 Do consider trying out the [plugin]([`gz_sim_led_plugin`](https://github.com/jasmeet0915/gz_sim_led_plugin)). Issues, PRs, Stars are always welcome :)
@@ -42,8 +48,7 @@ Well, its a Robotics Simulator, duh. But that is a user's perspective. What abou
 ### Gazebo's Architecture, Terminologies and Plugins
 There is a very handy official doc from Gazebo which explains the complete [architecture](https://gazebosim.org/docs/latest/architecture/) and [terminologies](https://gazebosim.org/api/gazebo/3/terminology.html) in detail. For the sake of keeping things short here, I would suggest you read the linked docs with extra focus on understanding the following w.r.t Gazebo: client-server & plugin-based architecture, Entity, Components, Entity Component Manager (ECM), Simulation Loop, Simulation Events, [System Plugin](https://gazebosim.org/api/sim/8/createsystemplugins.html) and Plugin Interfaces(PreUpdate, PostUpdate, Configure).
 
-### System Plugins & Interfaces:
-Since this blog is about making system plugins, let's discuss about them in a bit detail.
+## Gazebo's System Plugin & Interfaces:
 
 A plugin, by definition, is a piece of software which can be "plugged in" to an existing software to modify its runtime behavior or extend its functionality. Gazebo also offers a similar plugin-based architecture where we can load such  "System Plugins" dynamically in association with any entity in our simulation world. You can find a list of all the system plugins that come with Gazebo by default [here](https://github.com/gazebosim/gz-sim/tree/gz-sim10/src/systems). Whenever Gazebo parses an SDF world, it looks for the:
 
@@ -83,9 +88,9 @@ That is pricisely why we need a separate GUI plugin to VisualizeLidar in Gazebo 
 [!insert issue gif here]
 Explain context of gif here
 
-This means if you want to have a plugin which updates the scene on both: the GUI so you as a user can see that and the server side so your camera sensors can see the change, you would need the plugin to be loaded on both sides. This is where visual system plugins in Gazebo step up. These are plugins which are loaded from inside the `<visual>` element of any `<link>`. These plugins are by default loaded on both sides so you don't have to load them twice manually. The [ShaderParam](https://github.com/gazebosim/gz-sim/blob/gz-sim10/examples/worlds/shader_param.sdf) plugin would be a good example of such visual system plugins.
+This means if you want to have a plugin which updates the scene on both: the GUI so you as a user can see that and the server side so your camera sensors can see the change, you would need the plugin to be loaded on both sides. This is where visual system plugins in Gazebo step up. These are plugins which are loaded from inside the `<visual>` element of any `<link>` and are by default loaded on both sides so you don't have to develop and load 2 different versions of the plugin that achieves the same results. The [ShaderParam](https://github.com/gazebosim/gz-sim/blob/gz-sim10/examples/worlds/shader_param.sdf) plugin would be a good example of such visual system plugins.
 
-So for our use case (making a plugin which can simulate LEDs in Gazebo), visual system plugins seem like an obvious choice. However, there is a catch. If your plugin advertised a service (which is a one-to-many communication by nature), you would end up having 2 instances of the plugin advertising a service with the same name leading to unexpected behavior as you don't know which instance's callback would be executed on a request! This is what happened with me in a previous version of my LED plugin and you can read more about it from [here](https://github.com/gazebosim/gz-sim/issues/3207#issuecomment-3691392921).
+So for our use case (making a plugin which can simulate LEDs in Gazebo), visual system plugins seem like an obvious choice. However, there is a catch. If your plugin advertised a service (which is a one-to-many communication by nature), you would end up having 2 instances of the plugin advertising a service with the same name leading to unexpected behavior as you wont know which instance's callback would be executed on a request! This is what happened with me in a previous version of my LED plugin and you can read more about it from [here](https://github.com/gazebosim/gz-sim/issues/3207#issuecomment-3691392921).
 
 Since there was no satisfactory solution for this issue, I had to completely ditch the idea of using a **Visual System Plugin** and go with a generic system plugin which utilises the [VisualCmd](https://gazebosim.org/api/sim/9/namespacegz_1_1sim_1_1components.html#a8fc4552b2462d65dcf872beab6cff4dc) and [LightCmd](https://gazebosim.org/api/sim/9/namespacegz_1_1sim_1_1components.html#ad16cb8d23fb585fa75aef5266b3986e2) components for the respective visual and light entities of the "LEDs" in our plugin (This is explained in more detail later).
 
