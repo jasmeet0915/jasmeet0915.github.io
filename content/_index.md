@@ -34,15 +34,15 @@ description: "This page was built using the Blowfish theme for Hugo."
 
 <div class="home-buttons">
 
-  {{< button href="/files/Jasmeet_Singh_CV.pdf" target="_self" >}}
+  {{< button href="/files/Jasmeet_Singh_CV.pdf" target="_blank" >}}
   Download CV ↓
   {{< /button >}}
 
-  {{< button href="https://www.instructables.com/member/Jasmeeet%20Singh/" target="_self" >}}
+  {{< button href="https://www.instructables.com/member/Jasmeeet%20Singh/" target="_blank" >}}
   Instructables ↗
   {{< /button >}}
 
-  {{< button href="https://github.com/atom-robotics-lab" target="_self" >}}
+  {{< button href="https://github.com/atom-robotics-lab" target="_blank" >}}
   A.T.O.M Robotics Lab ↗
   {{< /button >}}
 
