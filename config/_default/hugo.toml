@@ -12,14 +12,14 @@ disableLanguages = [] #to allow translation work requiring shipping to productio
 enableRobotsTXT = true
 summaryLength = 30
 hasCJKLanguage = true
-timeout = 600
+timeout = 1200
 
 buildDrafts = false
 buildFuture = false
 
 enableEmoji = true
 
-googleAnalytics = "G-PEDMYR1V0K"
+googleAnalytics = "G-RRKSV2C45X"
 
 [pagination]
   pagerSize = 102
