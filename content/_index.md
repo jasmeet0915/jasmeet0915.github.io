@@ -34,7 +34,7 @@ description: "This page was built using the Blowfish theme for Hugo."
 
 <div class="home-buttons">
 
-  {{< button href="https://drive.google.com/uc?export=download&id=1C19a-loYY-ZQVA4GQI4dyVyafnPgl2X0" target="_self" >}}
+  {{< button href="/files/Jasmeet_Singh_CV.pdf" target="_self" >}}
   Download CV ↓
   {{< /button >}}
 
