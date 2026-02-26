@@ -8,22 +8,22 @@ series_order: 2
 ---
 
 {{< lead >}}
-This is going to be a 2 part series. This part covers the basics of Gazebo, System Plugins, Plugin Interfaces, etc. The next part dives into the actual nitty-gritties of developing a plugin. If you are already familiar with the basics, feel free to skip this one and jump directly to the [next ↗](TODO: Add link to the next blog here)
+This is part 2 of the series and assumes you have basic knowledge of Gazebo, System Plugins and Plugin Interfaces. If not, jump back to [part 1 ↗](blogs/beginner-gazebo-system-plugin-guide-1).
 {{< /lead >}}
 
 {{< alert "lightbulb" >}}
 **Note:** Whenever I say "Gazebo" in this blog, I am referring to the new Gazebo unless specified otherwise (Classic Gazebo).
 {{< /alert >}}
 
-[TODO: Brief intro here]
+If you are new to this series, let's just do a quick recap:
+As mentioned before, I'll be taking my latest plugin, `gz_sim_led_plugin`, as a reference for all the explanations throughout this guide. 
+As far as plugins go, this is more towards the beginner-friendly side and I believe having a working example that allows you to see everything in action, helps in better understanding.
 
 Let's start right where we left off in our Part 1!
 
 ## Making System Plugins for Gazebo
 
-### The LED Plugin: Understanding Our Reference
-
-As mentioned before, I'll be taking my latest plugin, `gz_sim_led_plugin`, as a reference for all the explanations throughout this guide. As far as plugins go, this is more towards the beginner-friendly side and I believe having a working example that allows you to see everything in action, helps in better understanding.
+### Understanding Our Reference: The LED Plugin
 
 {{< github repo="jasmeet0915/gz_sim_led_plugin" showThumbnail=false >}}
 
