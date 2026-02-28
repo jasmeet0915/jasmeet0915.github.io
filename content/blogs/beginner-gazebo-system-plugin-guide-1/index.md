@@ -19,9 +19,9 @@ This is a 2-part series. This part covers the basics, the next part covers plugi
 
 Let's quickly address the question: "Why does it matter?"
 
-I started working on advanced robotics back when the whole world was on shutdown with quarantine. At that time, Gazebo was my only source to research, experiment and develop robotics  projects. Naturally, this pushed me to build simulation-heavy projects - either personally or professionaly - but mostly for unique use cases requiring custom additions to Gazebo.
+I started working on advanced robotics back when the whole world was on shutdown with quarantine. At that time, Gazebo was my only source to research, experiment and develop robotics  projects. Naturally, this pushed me to build simulation-heavy projects - either personally or professionaly - but mostly for unique use cases requiring **custom additions to Gazebo**.
 
-I am also an active contributor to Gazebo who started with [this](https://github.com/gazebosim/gz-sim/issues/1057) fix in the **JointStatePublisher** System Plugin, a bunch of documentation fixes in Tutorial Parties, [this](https://github.com/gazebosim/gz-sim/issues/1909) migration of the **LensFlare** System Plugin from Classic Gazebo to the New Gazebo, and much more.
+I am also an open source contributor to Gazebo who started with [this](https://github.com/gazebosim/gz-sim/issues/1057) fix in the **JointStatePublisher** System Plugin, a bunch of documentation fixes in Tutorial Parties, [this](https://github.com/gazebosim/gz-sim/issues/1909) migration of the **LensFlare** System Plugin from Classic Gazebo to the New Gazebo, and much more.
 
 {{< alert "star" >}}
 **Quick Humble Brag:** My current tutorial party collection is at a total of [3 free t-shirts](https://x.com/debounSingh/status/2005638967157563865) 💪
@@ -38,7 +38,7 @@ Almost all of the work described above is somewhat related to **System Plugins**
 **Want your robots to simulate LEDs/Indicators in Gazebo to test all your software pathways? Well, you guessed it, [develop a plugin](https://github.com/jasmeet0915/gz_sim_led_plugin)** for it:
 {{<figure src="gazebo_led_plugin_demo.gif" width=800 loading="eager" align="center" caption="Demo gif of the plugin in action showing 2 robots and an industrial tower lamp model each having different LED group with different modes.">}}
 
-Now that we know the significance of developing plugins in Gazebo, this blog series aims to provide a **"Beginner's guide to making System Plugins for Gazebo"** - from introductions to development details with handy insight here and there.
+So clearly, Gazebo's System Plugins are important. Therefore, this blog series aims to provide a **"Beginner's guide to making System Plugins for Gazebo"** - from introductions to development details with handy insight here and there.
 
 Throughout this series, I'll be taking references from my latest plugin, [**gz_sim_led_plugin**](https://github.com/jasmeet0915/gz_sim_led_plugin), for explaining implementation details.
 

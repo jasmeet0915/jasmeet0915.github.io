@@ -41,13 +41,11 @@ As a systems engineer in robotics, it would probably be a part of your job to ma
 
 {{<figure src="gazebo_led_plugin_demo.gif" width=800 loading="eager" align="center" caption="RM250 Robot from Peer Robotics using blinking red LEDs while docking with a trolley. Do checkout their website: https://peerrobotics.ai/">}}
 
-## Making System Plugins for Gazebo
-
-### Configuring our Plugin: ISystemConfigure
+## Configuring our Plugin: ISystemConfigure
 
 Before writing a plugin (or in fact any piece of software), it is essential to lay out how your potential users are going to use it. In our case, this will be through some configuration inside the `<plugin>` tags of an SDF file. This configuration is the first thing made available to our plugin in the form of a `sdf::ElementConstPtr` instance through the `ISystemConfigure` interface. It is essential that we define our possible SDF snippet for the plugin so that it can act as a blueprint for our `Configure()` implementation. Therefore, in this section we will think about what a user of our plugin might need to configure, come with a friendly SDF snippet for it and then parallely see how it is implemented
 
-#### Describing our LED Modes: SDF to C++ Struct
+### Describing our LED Modes: SDF to C++ Struct
 
 As we have already established, different LED patterns/configurations are generally mapped to different modes/behaviours. Therefore, a potential user of our plugin would want to define a bunch of named `<modes>` each of which describes their own behaviour for a bunch of LEDs. This would look somewhat like:
 
@@ -137,15 +135,15 @@ struct LedModeStep
 };
 ```
 
-#### Describing our LEDs: Which Entities to use?
+### Describing our LEDs: Which Entities to use?
 
-For describing our LEDs, first we should decide which entities in Gazebo would best represent an LED. The most obvious choice would be the **Light** entity. However, that alone is not enough. Why? See the gif below:
+For describing our LEDs, we need to decide which entities in Gazebo would work best. The most obvious choice would be the [Light Entity](https://gazebosim.org/api/sim/9/classgz_1_1sim_1_1Light.html). However, light alone is not enough. Why? See the gif below:
 
 <!-- Show a gif that shows a blinking light in a sample world only with LED not visible -->
 
-This gif shows a blinking light source on a simple robot model. Can you see the problem? Even though the blinking light changes illumination on surroundings, it is not enough to represent an actual LED model itself. When you look at any real world indicators, they always have a diffuser on top to allow the light to spread out giving a softer uniform color.
+This gif shows a blinking light source on a simple robot model. Can you see the problem? Even though the blinking light changes illumination on surroundings, it does not represent an actual LED itself. When you look at any real world LEDs, they always have a diffuser on top to allow the light to spread out giving a softer uniform color (see the real robot gif above).
 
-Currently in Gazebo there is no way we can simulate an actual diffuser. So what can we do? We can use the **Visual** entity of our LED model and have it change its **Material** color in sync with the Light just like an actual diffuser. Therefore, we want our plugin to use both, Light and Visual entity, as an LED. So our LEDs description in our plugin SDF would look like this:
+Currently, in Gazebo, we cannot simulate an actual diffuser. So what can we do? We can use the **Visual Entity** of our LED link and have it change its **Material** color in sync with the Light just like an actual diffuser. Therefore, we want our plugin to use both, Light and Visual entity, as an LED. So, LED descriptions in our plugin SDF would look like this:
 
 ```xml
 <plugin name="plugin_class_name_with_namespace" filename="plugin_shared_library_name">
@@ -160,91 +158,464 @@ Currently in Gazebo there is no way we can simulate an actual diffuser. So what 
 </plugin>
 ```
 
-#### Scoped Names in Gazebo
-For the name, we'll be using the [scoped name](https://gazebosim.org/api/sim/8/namespacegz_1_1sim.html#ab26a693e034871db72a7d3118d5233ac) of the entity so our plugin can easily find the actual entity that the user intends to use even if the multiple entities with the same name exists.
-
-### Reading the SDF in Configure()
-
-Now that we have our SDF snippet figured out, we need to actually parse it in the `Configure()` method. If you recall from Part 1, `Configure()` gives us a `sdf::ElementConstPtr` which is basically the root element of our `<plugin>` tag. From here, it's all about traversing the SDF tree — think of it like parsing XML (because, well, it is XML).
-
-Here's the gist of how you'd read the modes and LEDs:
+And the equivalent C++ struct for the LED would be:
 
 ```C++
-void LedPlugin::Configure(
-    const Entity &_entity,
-    const std::shared_ptr<const sdf::Element> &_sdf,
-    EntityComponentManager &_ecm,
-    EventManager &_eventMgr)
+/// \brief Struct to define the individual LED
+struct Led
 {
-  // Read the LED group name
-  if (_sdf->HasElement("led_group_name"))
-    this->ledGroupName = _sdf->Get<std::string>("led_group_name");
+  /// \brief Name of the LED
+  std::string ledName{""};
 
-  // Parse LED definitions
-  auto ledElem = _sdf->FindElement("led");
+  /// \brief Scoped name of the Visual of the LED
+  std::string scopedVisualName{""};
+
+  /// \brief Scoped name of the light of the LED
+  std::string scopedLightName{""};
+
+  /// \brief Entity of the visual to be used with this LED
+  sim::Entity ledVisualEntity{kNullEntity};
+
+  /// \brief Entity of the light to be used with this LED
+  sim::Entity ledLightEntity{kNullEntity};
+
+  /// \brief The default color to use when the LED is reset
+  math::Color defaultColor{math::Color::White};
+
+  /// \brief The default intensity to use for the light when LED is reset
+  double defaultIntensity{0.0};
+};
+```
+
+## Reading the SDF in Configure()
+
+### Using the sdf::ElementConstPtr
+
+Now that we have our SDF snippet figured out, we need to parse it in our `Configure()`. If you recall from Part 1, `Configure()` is the plugin interface which gets called by Gazebo once after loading the plugin. It gives us a `sdf::ElementConstPtr` instance as an agrument which is basically the root element of our `<plugin>` tag. From here, it's all about traversing the SDF tree. The `sdf::Element` API gives us a handful of methods for that.
+
+Let's break down the key ones using snippets from our `Configure()` implementation:
+
+#### HasElement()
+
+Before reading any child element, you should check whether it actually exists. `HasElement()` takes a tag name as a string and returns `true` if a child with that name is present:
+
+```C++
+if (_sdf->HasElement("led_group_name"))
+{
+  this->dataPtr->ledGroupName = _sdf->Get<std::string>("led_group_name");
+}
+else
+{
+  gzwarn << "No name is specified for the led group, model name"
+          << " will be used for the change_mode service name" << std::endl;
+  this->dataPtr->ledGroupName = "led_" + this->dataPtr->model.Name(_ecm);
+}
+```
+
+This pattern is used everywhere in a plugin.
+
+For **optional** elements, it allows us to check if the user has provided a value or should we fall back to a sensible default. This is what happens in the snippet above where we set our `this->dataPtr->ledGroupName` from the optional `<led_group_name>` element if provided, else we default to use the model's name.
+
+For **required** elements, say `<led>`, you'd typically log an error and return early to signal that the plugin can't proceed without it:
+
+```C++
+if (_sdf->HasElement("led"))
+{
+  // Parse LEDs...
+}
+else
+{
+  gzerr << "[LED PLUGIN] No LEDs have been defined "
+        << "for the LED group: " << this->dataPtr->ledGroupName << std::endl;
+  return;
+}
+```
+
+{{< alert "lightbulb" >}}
+**Note:** You'll notice `this->dataPtr->` used throughout the code. This is the [**PIMPL (Pointer to Implementation)**](https://en.cppreference.com/w/cpp/language/pimpl) idiom. A C++ pattern where the class holds a `std::unique_ptr` to a private struct containing all its member data. Nearly all Gazebo plugins and libraries use this pattern.
+{{< /alert >}}
+
+#### Get<T>()
+
+Once you know an element exists, `Get<T>()` template function extracts its value and converts it to the type you specify. This function handles conversions for common types like `std::string`, `double`, `bool` and custom types defined in Gazebo like `gz::math::Color`, `gz::math::Vector`, etc. out of the box:
+
+```C++
+  this->dataPtr->ledGroupName = _sdf->Get<std::string>("led_group_name");
+```
+
+```C++
+  math::Color ledColor = stepElem->Get<math::Color>("color");
+```
+
+#### FindElement()
+
+`FindElement()` returns a `sdf::ElementConstPtr` pointing to the **first** child element matching the given tag name. This is your entry point whenever you need to iterate over multiple elements of the same name:
+
+```C++
+  sdf::ElementConstPtr ledElem = _sdf->FindElement("led");
+  // ledElem now points to the first <led> child element
+```
+
+#### GetNextElement()
+
+Once you have a pointer from `FindElement()`, calling `GetNextElement()` on it gives you the next element with the same name (similar to a linked list). It returns `nullptr` when there are no more matches, making it perfect for a `while` loop:
+
+```C++
+sdf::ElementConstPtr ledElem = _sdf->FindElement("led");
+while (ledElem)
+{
+  // ... process this <led> element ...
+  ledElem = ledElem->GetNextElement("led");
+}
+```
+
+This pattern is used throughout this plugin for reading multiple `<led>`, `<mode>`, `<step>` description.
+
+#### Factory Design Pattern is your friend
+
+As your plugin's SDF configuration grows, dumping all the parsing logic into `Configure()` directly will turn it into a mess pretty quickly.
+
+A much cleaner approach? **Static factory methods** called `FromSDF(sdf::ElementConstPtr)` on your data structs. Now each of your struct knows how to construct itself from an `sdf::ElementConstPtr`.
+
+In our LED plugin, both, `Led` and `LedMode` structs, have a `fromSDF()` static factory method that takes the relevant `sdf::ElementConstPtr` and returns a `std::optional` instance of that struct. The `std::optional` let's the caller of the factory method know if the contruction was successful or not.
+
+This keeps `Configure()` compact and focused on high-level orchestration rather than low-level parsing details:
+
+```C++
+// Read and create different LEDs as part of the group
+if (_sdf->HasElement("led"))
+{
+  sdf::ElementConstPtr ledElem = _sdf->FindElement("led");
+
   while (ledElem)
   {
-    std::string ledName = ledElem->Get<std::string>("name");
-    std::string visualName = ledElem->Get<std::string>("visual_name");
-    std::string lightName = ledElem->Get<std::string>("light_name");
-    // ... store these in your data structures
-    ledElem = ledElem->GetNextElement("led");
-  }
+    auto led = Led::fromSDF(ledElem, _ecm);
 
-  // Parse Modes
-  auto modeElem = _sdf->FindElement("mode");
-  while (modeElem)
-  {
-    LedMode mode;
-    mode.name = modeElem->Get<std::string>("name");
-
-    // Parse steps within each mode
-    auto stepElem = modeElem->FindElement("step");
-    while (stepElem)
+    if (led.has_value())
     {
-      LedModeStep step;
-      step.alwaysOn = stepElem->Get<bool>("always_on");
-      step.ledColor = stepElem->Get<math::Color>("color");
-      if (stepElem->HasElement("intensity"))
-        step.lightIntensity = stepElem->Get<double>("intensity");
-      if (stepElem->HasElement("on_time"))
-        step.ledOnTime = std::chrono::duration<double>(
-            stepElem->Get<double>("on_time"));
-
-      mode.modeSequenceSteps.push_back(step);
-      stepElem = stepElem->GetNextElement("step");
+      this->dataPtr->allLedsInGroup.insert({led.value().ledName, led.value()});
     }
-    // ... store the mode
-    modeElem = modeElem->GetNextElement("mode");
+
+    ledElem = ledElem->GetNextElement("led");
   }
 }
 ```
 
-The pattern is pretty straightforward: check if an element exists, grab its value with the appropriate type, and move to the next sibling using `GetNextElement()`. The `sdf::Element` API is your best friend here — it handles type conversions for common types like `math::Color`, `std::string`, `double`, etc. out of the box.
+And the same pattern for modes:
 
-One thing to note: we also use `Configure()` to look up the actual **Entity IDs** for our visuals and lights using the scoped names we parsed. You can use helper functions from `gz::sim` like `EntityFromScopedName()` or query the `EntityComponentManager` directly to find entities matching the names provided in the SDF.
+```C++
+// Read the described LED modes
+if (_sdf->HasElement("mode"))
+{
+  sdf::ElementConstPtr ledModesElem = _sdf->FindElement("mode");
 
-### Applying the LED Modes: ISystemPreUpdate
+  while (ledModesElem)
+  {
+    auto ledMode = LedMode::fromSDF(ledModesElem);
 
-This is where the magic happens. The `PreUpdate()` method runs **before every physics step** in the simulation loop. For our LED plugin, this is the perfect place to update the LED appearance based on the current mode and its animation sequence.
+    if (ledMode.has_value())
+    {
+      this->dataPtr->allLedModes.push_back(ledMode.value());
+    }
 
-The basic flow inside `PreUpdate()` looks like:
+    ledModesElem = ledModesElem->GetNextElement("mode");
+  }
+}
+```
 
-1. **Check the current mode** and figure out which step in the mode's sequence we should be on (based on elapsed time).
-2. **Get the color and intensity** for the current step.
-3. **Apply the changes** to both the Visual (material color) and the Light (diffuse color + intensity) entities.
+Here's what the `LedMode::fromSDF()` factory method looks like on the inside. Notice how it uses the exact same `HasElement()`, `Get()`, `FindElement()`, and `GetNextElement()` methods on the `sdf::ElementConstPtr` instance of our root `<mode>` element:
 
-For steps with `alwaysOn` set to `true`, we just set it once and forget about it. For animated sequences, we keep track of elapsed time and cycle through the steps. When the `on_time` for a step is up, we move to the next step — and when we reach the end, we loop back to the beginning. Simple as that.
+```C++
+/// \brief Static factory method to create an instance of LedMode
+/// using the sdf element
+/// \param[in] _sdf SDF Element from which you want to construct
+/// the LED Mode
+public: static std::optional<LedMode> fromSDF(sdf::ElementConstPtr _sdf)
+{
+  LedMode ledMode;
 
-#### VisualCmd and LightCmd Components
+  // Read and set the name of the LED Mode
+  if (!_sdf->HasAttribute("name"))
+  {
+    gzerr << "[LED PLUGIN] [LED MODE] Name attribute is "
+          << "missing. Can't construct led mode" << std::endl;
 
-Gazebo uses an **Entity Component System (ECS)** architecture (as we covered in Part 1). So how do we actually tell the rendering engine to change a Visual's color or a Light's intensity? We don't call rendering APIs directly — instead, we use **command components**.
+    return std::nullopt;
+  }
+
+  ledMode.name = _sdf->Get<std::string>("name");
+  gzmsg << "Adding LED Mode: " << ledMode.name << std::endl;
+
+  // Read the active LEDs for this mode if any
+  if (_sdf->HasElement("active_leds"))
+  {
+    sdf::ElementConstPtr activeLedsElem = _sdf->FindElement("active_leds");
+
+    if (activeLedsElem->HasElement("led"))
+    {
+      sdf::ElementConstPtr ledElem = activeLedsElem->FindElement("led");
+
+      while (ledElem)
+      {
+        std::string ledName = ledElem->Get<std::string>();
+        ledMode.activeLedNames.push_back(ledName);
+
+        gzmsg << "[LED PLUGIN][LED MODE] Mode [" << ledMode.name
+              << "] uses LED: " << ledName << std::endl;
+
+        ledElem = ledElem->GetNextElement("led");
+      }
+    }
+  }
+
+  // Read the different steps involved in this LED Mode
+  if (!_sdf->HasElement("step"))
+  {
+    gzerr << "[LED PLUGIN] [LED MODE] No steps are given for "
+          << " the LED mode: " << ledMode.name << ". Can't "
+          << "construct led mode" << std::endl;
+
+    return std::nullopt;
+  }
+
+  sdf::ElementConstPtr stepElem = _sdf->FindElement("step");
+  while (stepElem)
+  {
+    LedModeStep ledModeStep;
+
+    if (stepElem->HasAttribute("always_on"))
+    {
+      ledModeStep.alwaysOn = stepElem->Get<bool>("always_on");
+    }
+
+    if (stepElem->HasElement("color"))
+    {
+      math::Color ledColor = stepElem->Get<math::Color>("color");
+      ledModeStep.ledColor = ledColor;
+    }
+
+    if (stepElem->HasElement("on_time"))
+    {
+      if (!ledModeStep.alwaysOn)
+      {
+        ledModeStep.ledOnTime = std::chrono::duration<double>(
+          stepElem->Get<double>("on_time"));
+      }
+      else
+      {
+        gzwarn << "LED Mode: " << ledMode.name << " step is set to "
+                << "always on, on_time will be ignored" << std::endl;
+      }
+    }
+
+    if (stepElem->HasElement("intensity"))
+    {
+      ledModeStep.lightIntensity = stepElem->Get<double>("intensity");
+    }
+
+    ledMode.modeSequenceSteps.push_back(ledModeStep);
+    stepElem = stepElem->GetNextElement("step");
+  }
+
+  return ledMode;
+}
+```
+
+#### Getting our Visual & Light Entity IDs
+
+Parsing names from the SDF is only half the story. To actually change a Visual's material or a Light's color at runtime, we need their **Entity IDs**. Through the `Led::fromSDF()` factory method, we resolve the scoped names from our `<led>` description into Entity IDs that we can use later in `PreUpdate()`.
+
+This is where [`gz::sim::entitiesFromScopedName()`](https://gazebosim.org/api/sim/8/namespacegz_1_1sim.html#ab26a693e034871db72a7d3118d5233ac) comes in handy. It takes a scoped name string (like `my_robot_model::led_link::led_visual`) and the `gz::sim::EntityComponentManager`, and returns a `std::unordered_set<Entity>` of all entities matching that name. Here's the full `Led::fromSDF()` factory method handling the SDF parsing and entity resolution:
+
+```C++
+public: static std::optional<Led> fromSDF(sdf::ElementConstPtr _sdf,
+  const EntityComponentManager &_ecm)
+{
+  Led led;
+
+  if (!_sdf->HasAttribute("name"))
+  {
+    gzerr << "[LED PLUGIN][LED] Name attribute for the LED is "
+          << "missing. Can't construct LED" << std::endl;
+    return std::nullopt;
+  }
+
+  led.ledName = _sdf->Get<std::string>("name");
+  gzmsg << "[LED PLUGIN][LED] Creating led: " << led.ledName << std::endl;
+
+  // Use the visual name to find the Visual entity provided for LED
+  if (_sdf->HasElement("visual_name"))
+  {
+    led.scopedVisualName = _sdf->Get<std::string>("visual_name");
+    std::unordered_set<Entity> visualEntities = gz::sim::entitiesFromScopedName(led.scopedVisualName, _ecm);
+    gzmsg << "Found " << visualEntities.size() << " entities for the visual named: "
+          << led.scopedVisualName << std::endl;
+
+    if (visualEntities.empty())
+    {
+      gzerr << "[LED PLUGIN][LED] No visuals found with the name: "
+            << led.scopedVisualName << ". Can't use visuals for the LED" << std::endl;
+    }
+    else
+    {
+      if (visualEntities.size() > 1)
+      {
+        gzerr << "[LED PLUGIN][LED] Multiple visuals found with the name: "
+              << led.scopedVisualName << ". Using the first one found" << std::endl;
+      }
+
+      led.ledVisualEntity = *visualEntities.begin();
+    }
+  }
+
+  // Use the light name to find the Light entity provided for LED
+  if (_sdf->HasElement("light_name"))
+  {
+    led.scopedLightName = _sdf->Get<std::string>("light_name");
+    std::unordered_set<Entity> lightEntities = gz::sim::entitiesFromScopedName(led.scopedLightName, _ecm);
+
+    gzmsg << "Found " << lightEntities.size() << " entities for the light named: "
+          << led.scopedLightName << std::endl;
+
+    if (lightEntities.empty())
+    {
+      gzerr << "[LED PLUGIN][LED] No lights found with the name: "
+            << led.scopedLightName << ". Can't use lights for the LED" << std::endl;
+    }
+    else
+    {
+      if (lightEntities.size() > 1)
+      {
+        gzerr << "[LED PLUGIN][LED] Multiple lights found with the name: "
+              << led.scopedLightName << ". Using the first one found" << std::endl;
+      }
+
+      led.ledLightEntity = *lightEntities.begin();
+    }
+  }
+
+  // Read the default state of the LED if provided
+  if (_sdf->HasElement("default_state"))
+  {
+    sdf::ElementConstPtr defaultStateElem = _sdf->FindElement("default_state");
+
+    if (defaultStateElem->HasElement("color"))
+    {
+      led.defaultColor = defaultStateElem->Get<math::Color>("color");
+    }
+
+    if (defaultStateElem->HasElement("intensity"))
+    {
+      led.defaultIntensity = defaultStateElem->Get<double>("intensity");
+    }
+  }
+
+  return led;
+}
+```
+
+## Applying the LED Modes: ISystemPreUpdate
+
+This is where the magic happens. The `PreUpdate()` method runs **before every physics step** in the simulation loop. For our LED plugin, this is the perfect place to update the LED appearance based on the current mode and its steps.
+
+```C++
+// Set the current step from the current LED Mode
+LedModeStep currentLedModeStep = this->dataPtr->currentLedMode.modeSequenceSteps[this->dataPtr->currentModeStepIdx];
+
+// Change the visual and light properties of the LEDs based on the current mode
+if (this->dataPtr->currentLedMode.activeLedNames.empty())
+{
+  // Set the state of all LEDs in the group according to the current LED Mode
+  for (const auto &led : this->dataPtr->allLedsInGroup)
+  {
+    // Set the visual properties if the visual entity is not null
+    if (led.second.ledVisualEntity != kNullEntity)
+    {
+      this->dataPtr->SetVisualProperties(led.second.ledVisualEntity, _ecm, currentLedModeStep.ledColor);
+    }
+
+    // Set the light properties if the light entity is not null
+    if (led.second.ledLightEntity != kNullEntity)
+    {
+      this->dataPtr->SetLightProperties(led.second.ledLightEntity, _ecm, currentLedModeStep.ledColor,
+        currentLedModeStep.lightIntensity);
+    }
+  }
+}
+else
+{
+  // Set the state of the LEDs in the activeLedNames for the current LED Mode
+  for (const std::string &ledName : this->dataPtr->currentLedMode.activeLedNames)
+  {
+    // Set the visual properties if the visual entity is not null
+    if (this->dataPtr->allLedsInGroup[ledName].ledVisualEntity != kNullEntity)
+    {
+      this->dataPtr->SetVisualProperties(this->dataPtr->allLedsInGroup[ledName].ledVisualEntity,
+        _ecm, currentLedModeStep.ledColor);
+    }
+
+    // Set the light properties if the light entity is not null
+    if (this->dataPtr->allLedsInGroup[ledName].ledLightEntity != kNullEntity)
+    {
+      this->dataPtr->SetLightProperties(this->dataPtr->allLedsInGroup[ledName].ledLightEntity,
+        _ecm, currentLedModeStep.ledColor, currentLedModeStep.lightIntensity);
+    }
+  }
+}
+```
+
+### Using UpdateInfo for Timed Operations
+
+Our plugin's `PreUpdate()` callback receives an `UpdateInfo` struct that contains the current simulation time. This is how our plugin keeps track of the "on_time" of a step and knows when to advance to the next.
+
+For steps with `alwaysOn` set to `true`, it's simple - apply the step once and do nothing else:
+
+```C++
+// If this step is supposed to be always on then just return
+if (currentLedModeStep.alwaysOn)
+{
+  return;
+}
+```
+
+For animated sequences, we track a `cycleStartTime` and compare it against the current simulation time to figure out how long the current step has been active. When the elapsed time exceeds the step's `ledOnTime`, we advance to the next step (cycling back to the beginning when we hit the end):
+
+```C++
+// Set the cycle start time
+if (this->dataPtr->cycleStartTime == std::chrono::duration<double>::zero() ||
+    this->dataPtr->cycleStartTime > this->dataPtr->currentSimTime)
+{
+  this->dataPtr->cycleStartTime = this->dataPtr->currentSimTime;
+}
+std::chrono::duration<double> elapsed = this->dataPtr->currentSimTime - this->dataPtr->cycleStartTime;
+
+// If we have crossed the elapsed time of the step on time, move to the next step
+if (elapsed > currentLedModeStep.ledOnTime)
+{
+  this->dataPtr->currentModeStepIdx++;
+
+  // If we have reached the end of the steps, cycle back to the first one
+  if (this->dataPtr->currentModeStepIdx == this->dataPtr->currentLedMode.modeSequenceSteps.size())
+  {
+    this->dataPtr->currentModeStepIdx = 0;
+  }
+
+  // Reset the cycle start time
+  this->dataPtr->cycleStartTime = std::chrono::duration<double>::zero();
+}
+```
+
+The extra check `cycleStartTime > currentSimTime` handles the case where the simulation is reset — sim time jumps back to zero, so we need to re-initialize the cycle start.
+
+### VisualCmd and LightCmd Components
+
+So how do we actually tell the rendering engine to change a Visual's color or a Light's intensity? We don't call rendering APIs directly. Instead, we use our entity's **command components**.
 
 Specifically:
-- **`components::VisualCmd`** — Attach this to a Visual entity to request changes to its material (like diffuse/emissive color, specular, etc.). Under the hood, it takes a `msgs::Visual` protobuf message.
-- **`components::LightCmd`** — Attach this to a Light entity to change its properties (color, intensity, range, etc.). This one takes a `msgs::Light` protobuf message.
+- **`components::VisualCmd`** — Attach this to a Visual entity (if not already attached) to request changes to its material. It takes a `gz::msgs::Visual` protobuf message.
+- **`components::LightCmd`** — Attach this to a Light entity (if not already attached) to change its properties. It takes a `gz::msgs::Light` protobuf message.
 
-Here's roughly what it looks like in practice:
+Here's how we use them in our plugin's `SetVisualProperties()` & `SetLightProperties()` functions:
 
 ```C++
 // Update the Visual's material color
@@ -253,31 +624,43 @@ msgs::Material *materialMsg = visualMsg.mutable_material();
 msgs::Set(materialMsg->mutable_diffuse(), ledColor);
 msgs::Set(materialMsg->mutable_emissive(), ledColor);
 
-auto visualCmdComp = _ecm.Component<components::VisualCmd>(visualEntity);
-if (visualCmdComp)
-  visualCmdComp->SetData(visualMsg);  // Update existing
+auto visualCmdComp = _ecm.Component<components::VisualCmd>(_visualEntity);
+if (!visualCmdComp)
+{
+  _ecm.CreateComponent(_visualEntity, components::VisualCmd(visualMsg));
+}
 else
-  _ecm.CreateComponent(visualEntity, components::VisualCmd(visualMsg));  // Create new
+{
+  auto state = visualCmdComp->SetData(visualMsg, visualEq) ?
+    ComponentState::OneTimeChange : ComponentState::NoChange;
+  _ecm.SetChanged(_visualEntity, components::VisualCmd::typeId, state);
+}
 
 // Update the Light's color and intensity
 msgs::Light lightMsg;
 msgs::Set(lightMsg.mutable_diffuse(), ledColor);
 lightMsg.set_intensity(lightIntensity);
 
-auto lightCmdComp = _ecm.Component<components::LightCmd>(lightEntity);
-if (lightCmdComp)
-  lightCmdComp->SetData(lightMsg);
+auto lightCmdComp = _ecm.Component<components::LightCmd>(_lightEntity);
+if (!lightCmdComp)
+{
+  _ecm.CreateComponent(_lightEntity, components::LightCmd(lightMsg));
+}
 else
-  _ecm.CreateComponent(lightEntity, components::LightCmd(lightMsg));
+{
+  auto state = lightCmdComp->SetData(lightMsg, lightEq) ?
+    ComponentState::OneTimeChange : ComponentState::NoChange;
+  _ecm.SetChanged(_lightEntity, components::LightCmd::typeId, state);
+}
 ```
 
-The idea is: you populate a protobuf message with the desired state, then either create or update the corresponding `Cmd` component on the entity. Gazebo's internal systems pick up these command components and apply the changes to the actual rendering scene. It's a clean pattern — your plugin never touches the renderer directly.
+The idea is: you populate a protobuf message with the desired state, then either create or update the corresponding `Cmd` component on the entity. Then, its upto Gazebo's internals to pick these command components and apply the changes.
 
 ### Advertising the Mode Change Service
 
 So we can define modes. We can animate LEDs. But how does the rest of the system (like your robot's ROS stack) actually **tell** our plugin to switch modes at runtime?
 
-Enter **Gazebo Transport services**. In `Configure()`, we advertise a service that allows external code to request a mode change. The service name uses the `<led_group_name>` we parsed earlier, giving us something like `/front_leds/change_mode`.
+Enter **Gazebo Transport Services**. In `Configure()`, we advertise a service that allows external code to request a mode change. The service name uses the `<led_group_name>` we parsed earlier, giving us something like `/tower_lamp_leds/change_mode`.
 
 ```C++
 // In Configure()
@@ -285,31 +668,60 @@ std::string serviceName = "/" + this->ledGroupName + "/change_mode";
 this->node.Advertise(serviceName, &LedPlugin::OnChangeModeRequest, this);
 ```
 
-The callback is straightforward — it receives the requested mode name, validates it against our list of known modes, and switches the current mode:
+The callback is straightforward. It receives the requested mode name and finds it our `allLedModes` vector. If found, the callback udpates the `currentLedMode` & resets the `currentModeStepIdx` and `cycleStartTime`:
 
 ```C++
-bool LedPlugin::OnChangeModeRequest(
-    const msgs::StringMsg &_req, msgs::Boolean &_res)
+bool LedPluginPrivate::OnLedModeChange(const msgs::StringMsg &_req,
+  msgs::Boolean &_resp)
 {
-  std::string requestedMode = _req.data();
-  if (this->modes.find(requestedMode) != this->modes.end())
+  std::lock_guard<std::mutex> lock(this->mutex);
+
+  std::string requestedModeName = _req.data();
+  gzmsg << "[LED PLUGIN] [ON MODE CHANGE] received request to change mode to: "
+        << requestedModeName << std::endl;
+
+  auto ledModeIter = std::find_if(this->allLedModes.begin(), this->allLedModes.end(),
+    [&](LedMode _mode)
+    {
+      if (_mode.name == requestedModeName)
+      {
+        return true;
+      }
+      return false;
+    });
+
+  // If the requested mode was not found
+  if (ledModeIter == this->allLedModes.end())
   {
-    this->currentMode = requestedMode;
-    _res.set_data(true);
+    gzerr << "[LED PLUGIN] Requested LED Mode: " << requestedModeName
+          << " was not described" << std::endl;
+
+    _resp.set_data(false);
+    return false;
   }
-  else
-  {
-    gzwarn << "Requested mode '" << requestedMode << "' not found!" << std::endl;
-    _res.set_data(false);
-  }
+
+  gzmsg << "[LED PLUGIN] [ON MODE CHANGE] Changing led mode from: "
+        << this->currentLedMode.name << " to: " << requestedModeName << std::endl;
+
+  this->currentLedMode = *(ledModeIter);
+  this->currentModeStepIdx = 0;
+  this->cycleStartTime = std::chrono::duration<double>::zero();
+  gzmsg << "[LED PLUGIN] [ON MODE CHANGE] Current led mode set to: "
+        << this->currentLedMode.name << std::endl;
+
+  _resp.set_data(true);
+
+  // Setting LEDs as not ready as we want them to be reset after a mode change
+  // This is done because we cannot directly reset the LEDs from here as ECM is required
+  this->ledsReady = false;
   return true;
 }
 ```
 
-You can then trigger mode changes from the command line using `gz service` or from your ROS nodes through the `ros_gz_bridge`. Pretty handy for testing — you don't need to wire up your entire ROS stack just to see if the LEDs blink correctly.
+You can now trigger mode changes from the command line using `gz service` or from your ROS stack using the `ros_gz_bridge`.
 
 ### Ending Notes
 
 And that's pretty much the whole picture! To quickly recap what we covered in this part: we designed our plugin's SDF configuration, parsed it in `Configure()`, used `VisualCmd` and `LightCmd` components in `PreUpdate()` to animate LEDs, and finally advertised a Gazebo Transport service to allow runtime mode switching.
 
-One piece of advice: the **API reference is your friend**. Seriously. Gazebo's API docs might not win any beauty contests, but they are comprehensive. Whenever you're stuck wondering "how do I change X on entity Y?", chances are there's a component or a helper function for it — you just need to look it up. The [gz-sim API reference](https://gazebosim.org/api/sim/8/) and the [gz-msgs reference](https://gazebosim.org/api/msgs/10/) are especially useful when working with command components.
+One piece of advice: the **API reference is your friend**. Seriously. Gazebo's API docs might not win any beauty contests, but they are comprehensive. Whenever you're stuck wondering "how do I change X on entity Y?", chances are there's a component or a helper function for it. The [gz-sim API reference](https://gazebosim.org/api/sim/8/) and the [gz-msgs reference](https://gazebosim.org/api/msgs/10/) are especially useful when working with command components.
