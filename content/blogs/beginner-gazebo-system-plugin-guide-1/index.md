@@ -19,23 +19,15 @@ This is a 2-part series. This part covers the basics, the next part covers plugi
 
 Let's quickly address the question: "Why does it matter?"
 
-I started working on advanced robotics back when the whole world was on shutdown with quarantine. At that time, Gazebo was my only source to research, experiment and develop robotics  projects. Naturally, this pushed me to build simulation-heavy projects - either personally or professionaly - but mostly for unique use cases requiring **custom additions to Gazebo**.
-
-I am also an open source contributor to Gazebo who started with [this](https://github.com/gazebosim/gz-sim/issues/1057) fix in the **JointStatePublisher** System Plugin, a bunch of documentation fixes in Tutorial Parties, [this](https://github.com/gazebosim/gz-sim/issues/1909) migration of the **LensFlare** System Plugin from Classic Gazebo to the New Gazebo, and much more.
-
-{{< alert "star" >}}
-**Quick Humble Brag:** My current tutorial party collection is at a total of [3 free t-shirts](https://x.com/debounSingh/status/2005638967157563865) 💪
-{{< /alert >}}
-
-Almost all of the work described above is somewhat related to **System Plugins** in Gazebo. I can't stress this enough when I say: **"You can do anything in Gazebo if you know how to develop plugins"**.
+Simple said: **"You can literally do anything in Gazebo if you know how to develop plugins"**.
 
 **Want to simulate the Martian Environment for developing your mars rover? Easy, [develop plugins]((https://www.youtube.com/watch?v=K7hV-B1lwzw&t=2566s))** that can generate terrain based on real elevation data, simulate day/light conditions and dust storms that also affect the sensors:
 {{<figure src="mars_curiosity_rover.gif" width=800 loading="eager" align="center" caption="Demo gif of our team's submission to the NASA Summer Sprint Simulation Challenge, 2024. You can watch the full showcase of the project from Gazebo Community Meeting from the link above">}}
 
-**Want more control for simulating realistic scenarios with humans around your robots? Easy, [develop a plugin](https://github.com/blackcoffeerobotics/gazebo-ros-actor-plugin)** that allows you to control actors in simulation similar to how you would control your robots:
-{{<figure src="actor_vel.gif" width=800 loading="eager" align="center" caption="Demo gif of the gazebo-ros-actor-plugin. Credits: Black Coffee Robotics">}}
+**Want to make Tom Cat Dance in Disco Party?** Develop an LED plugin and simulate a disco light with it:
+{{<figure src="featured.gif" width=800 loading="eager" align="center" caption="No explanation needed here ;)">}}
 
-**Want your robots to simulate LEDs/Indicators in Gazebo to test all your software pathways? Well, you guessed it, [develop a plugin](https://github.com/jasmeet0915/gz_sim_led_plugin)** for it:
+**Want your robots to simulate LEDs/Indicators like real ones in Gazebo? Well, you guessed it, [develop a plugin](https://github.com/jasmeet0915/gz_sim_led_plugin)** for it:
 {{<figure src="gazebo_led_plugin_demo.gif" width=800 loading="eager" align="center" caption="Demo gif of the plugin in action showing 2 robots and an industrial tower lamp model each having different LED group with different modes.">}}
 
 So clearly, Gazebo's System Plugins are important. Therefore, this blog series aims to provide a **"Beginner's guide to making System Plugins for Gazebo"** - from introductions to development details with handy insight here and there.

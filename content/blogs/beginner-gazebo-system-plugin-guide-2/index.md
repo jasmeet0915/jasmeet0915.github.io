@@ -8,35 +8,41 @@ series_order: 2
 ---
 
 {{< lead >}}
-This is Part 2 of the series & assumes you have basic knowledge of Gazebo, System Plugins and Plugin Interfaces. If not, jump back to [Part 1 ↗](/blogs/beginner-gazebo-system-plugin-guide-1/).
+This is Part 2 of the series & assumes you know the basics. If not, jump back to [Part 1 ↗](/blogs/beginner-gazebo-system-plugin-guide-1/).
 {{< /lead >}}
 
 ## Understanding Our Reference: The LED Plugin
 
-As mentioned in [Part 1](/blogs/beginner-gazebo-system-plugin-guide-1/), I'll be taking my latest plugin, `gz_sim_led_plugin`, as a reference for all the explanations throughout this guide. 
+As mentioned in [Part 1](/blogs/beginner-gazebo-system-plugin-guide-1/), I'll be taking my latest plugin, [gz_sim_led_plugin](https://github.com/jasmeet0915/gz_sim_led_plugin/), as a reference for all the explanations throughout this guide. 
 
 {{< github repo="jasmeet0915/gz_sim_led_plugin" showThumbnail=false >}}
 
-The idea behind this plugin is simple:
+{{<figure src="gazebo_led_plugin_demo.gif" width=800 loading="eager" align="center" caption="Demo gif of the plugin in action showing 2 robots and an industrial tower lamp model each having different LED group with different modes.">}}
 
-We want to **simulate LEDs/Indicators** in Gazebo. **Why?** Because all industrial systems always have some kind of indicators (mostly LEDs) that lets you know what's happening behind the scenes. **For instance,** a robot might
+The idea behind the plugin is simple:
 
-* Use **blinking red LEDs** in **fault / emergency** mode to tell operators that the robot is not functioning correctly and human intervention is required
+We want to **simulate LEDs/Indicators** in Gazebo.
+
+**Why?** Because all industrial systems use some kind of indicators (mostly LEDs) to let you know what's happening behind the scenes. **For instance,** a robot might
+
+* Use **blinking red LEDs** in **fault / emergency** mode to tell operators that the robot is not functioning correctly and human intervention is required.
 * Use **blinking green LEDs** in **ready** mode to tell operators that the robot is *ready* to take missions.
 * Use **solid yellow LEDs** when its **low on battery** to tell operators that the robot needs to be put on charge (or might go to auto charge, if available)
 * Use **pulsing blue LEDs** for on-going **docking/undocking operation** to tell operators that the robot is performing precision maneuvers so caution is advised.
 
 And so on.
 
+Since such LED patterns map directly to your robot's internal states/modes, simulating them saves you from needing hardware during development.
+
 {{<figure src="rm250_docking.gif" width=800 loading="eager" align="center" caption="RM250 Robot from Peer Robotics using blinking red LEDs while docking with a trolley. Do checkout their website: https://peerrobotics.ai/">}}
 
-Naturally, such LED patterns are generally associated with different internal **modes** or **states** of a robot and as a robotics systems engineer, it might be a part of your job to ensure such **mode <-> LED mappings**. Therefore, like any piece of hardware, it makes sense to simulate LEDs for development and testing of such flows without the need of actual hardware.
+## Our Plugin's SDF: The Blueprint
 
-{{<figure src="gazebo_led_plugin_demo.gif" width=800 loading="eager" align="center" caption="Demo gif of the plugin in action showing 2 robots and an industrial tower lamp model each having different LED group with different modes.">}}
+Before writing a plugin (or in fact any piece of software), it is essential to lay out how your potential users are going to use it. In our case, this will be through some configuration inside the `<plugin>` tags of an SDF file.
 
-Before writing a plugin (or in fact any piece of software), it is essential to lay out how your potential users are going to use it. In our case, this will be through some configuration inside the `<plugin>` tags of an SDF file. This configuration is made available to our plugin as a `sdf::ElementConstPtr` instance through the `ISystemConfigure` interface. Therefore, it is essential to define our possible SDF snippet for the plugin so that it can act as a blueprint for our `Configure()` implementation.
+This configuration is made available to our plugin as a `sdf::ElementConstPtr` instance through the **ISystemConfigure** interface which is the first thing that runs after a plugin is successfully loaded. Therefore, it is essential to define a possible SDF snippet for our plugin beforehand so that it can act as a **blueprint** for our `Configure()` implementation.
 
-## Describing our LED Modes: SDF to C++ Struct
+### Describing our LED Modes: SDF to C++ Struct
 
 Any potential user of our plugin would want to define a bunch of named `<mode>` with their distinct behaviors for a bunch of LEDs. The SDF snippet for it might look like:
 
@@ -94,43 +100,27 @@ Building upon this, we have our final mode description in SDF that looks somethi
 **Structs in C++** are an obvious choice to represent our `<mode>` and `<step>` data inside the plugin:
 
 ```C++
-/// \brief Struct to define the LED Mode
 struct LedMode
 {
-  /// \brief Name of the LED Mode
   std::string name{""};
-
-  /// \brief List of string names of the active LEDs in this mode
   std::vector<std::string> activeLedNames;
-
-  /// \brief A list steps in sequence for the LED mode
   std::vector<LedModeStep> modeSequenceSteps;
 };
 
-/// \brief Struct to define a step in the LED Mode Sequence
 struct LedModeStep
 {
-  /// \brief Whether the LED should stay on indefinitely
   bool alwaysOn{false};
-
-  /// \brief Whether the LED should stay on indefinitely
   math::Color ledColor{math::Color::White};
-
-  /// \brief Seconds for which the LED should stay on.
-  /// Used when alwaysOn is false
   std::chrono::duration<double> ledOnTime{1s};
-
-  /// \brief Intensity for any lights as part of the LED
-  /// Defaults to 1.0
   double lightIntensity{1.0};
 };
 ```
 
-## Describing our LEDs: Which Gazebo Entity to use?
+### Describing our LEDs: Which Gazebo Entity to use?
 
 For describing our LEDs, we need to decide which entities in Gazebo would work best. The **most obvious choice** would be the [Light Entity](https://gazebosim.org/api/sim/9/classgz_1_1sim_1_1Light.html). **However, light alone is not enough.** Why? See the gif of a blinking light source in Gazebo below:
 
-<!-- Show a gif that shows a blinking light in a sample world only with LED not visible -->
+{{<figure src="led_without_visual.gif" width=800 loading="eager" align="center" caption="Gif showing the same tower lamp model with LEDs using only the Light Entity">}}
 
 **Can you see the problem?**
 
@@ -154,28 +144,14 @@ Currently, in Gazebo, we cannot simulate an actual diffuser. But, we can use a *
 With an equivalent **C++ struct**:
 
 ```C++
-/// \brief Struct to define the individual LED
 struct Led
 {
-  /// \brief Name of the LED
   std::string ledName{""};
-
-  /// \brief Scoped name of the Visual of the LED
   std::string scopedVisualName{""};
-
-  /// \brief Scoped name of the light of the LED
   std::string scopedLightName{""};
-
-  /// \brief Entity of the visual to be used with this LED
   sim::Entity ledVisualEntity{kNullEntity};
-
-  /// \brief Entity of the light to be used with this LED
   sim::Entity ledLightEntity{kNullEntity};
-
-  /// \brief The default color to use when the LED is reset
   math::Color defaultColor{math::Color::White};
-
-  /// \brief The default intensity to use for the light when LED is reset
   double defaultIntensity{0.0};
 };
 ```
@@ -190,6 +166,8 @@ Now that we have our SDF snippet figured out, we need to parse it in our `Config
 
 Before reading any child element, you should check whether it actually exists. `HasElement()` takes a tag name as a string and returns `true` if a child with that name is present:
 
+For **optional** elements, it allows us to check if the user has provided a value or should we fall back to a sensible default. This is what happens in the snippet below where we set our `this->dataPtr->ledGroupName` from the optional `<led_group_name>` element if provided, else we default to use the **Model Entity's** name.
+
 ```C++
 if (_sdf->HasElement("led_group_name"))
 {
@@ -201,9 +179,11 @@ else
 }
 ```
 
-For **optional** elements, it allows us to check if the user has provided a value or should we fall back to a sensible default. This is what happens in the snippet above where we set our `this->dataPtr->ledGroupName` from the optional `<led_group_name>` element if provided, else we default to use the **Model Entity's** name.
+{{< alert "code" >}}
+**Note:** The `this->dataPtr->` used here is the [**PIMPL**](https://en.cppreference.com/w/cpp/language/pimpl) idiom C++ pattern. Nearly all Gazebo plugins use this pattern.
+{{< /alert >}}
 
-For **required** elements, say `<led>`, you'd typically log an error and return early to signal that the plugin can't proceed without it. For instance:
+For **required** elements, say `<led>`, you'd typically log an error and return from `Configure()` if it is missing to signal that the plugin can't proceed without it. For instance:
 
 ```C++
 if (_sdf->HasElement("led"))
@@ -216,10 +196,6 @@ else
   return;
 }
 ```
-
-{{< alert "code" >}}
-**Note:** The `this->dataPtr->` used here is the [**PIMPL**](https://en.cppreference.com/w/cpp/language/pimpl) idiom C++ pattern where our class holds a `std::unique_ptr` to a private struct containing its member data. Nearly all Gazebo plugins use this pattern.
-{{< /alert >}}
 
 #### Get&lt;T&gt;()
 
@@ -255,7 +231,7 @@ while (ledElem)
 }
 ```
 
-This pattern is used throughout our plugin for reading `<led>`, `<mode>`, `<step>` descriptions.
+This pattern is used throughout our plugin for reading `<led>`, `<mode>` and `<step>` descriptions.
 
 ### Factory Design Pattern is your friend
 
@@ -263,7 +239,7 @@ As your plugin's **SDF configuration grows**, dumping all the parsing logic into
 
 What could be a cleaner approach?
 
-**Static factory methods:** `FromSDF(sdf::ElementConstPtr)` in your data structs. Now each of your struct knows how to construct itself.
+**Static factory methods** named `FromSDF(sdf::ElementConstPtr)` in your data structs. Now each of your struct knows how to construct itself.
 
 In our LED plugin, both, `Led` and `LedMode` structs, have a `fromSDF()` static factory method. They take a relevant `sdf::ElementConstPtr` and return a `std::optional` instance of their respective structs. The `std::optional` can be used to know if the contruction was successful or not.
 
@@ -289,46 +265,7 @@ if (_sdf->HasElement("mode"))
 }
 ```
 
-And here's what the `LedMode::fromSDF()` factory method looks like on the inside:
-
-```C++
-public: static std::optional<LedMode> fromSDF(sdf::ElementConstPtr _sdf)
-{
-  LedMode ledMode;
-
-  // Read and set the name of the LED Mode
-  if (!_sdf->HasAttribute("name"))
-  {
-    // Log an error msg
-    return std::nullopt;
-  }
-
-  ledMode.name = _sdf->Get<std::string>("name");
-
-  // Read the active LEDs for this mode if any
-  if (_sdf->HasElement("active_leds"))
-  {
-    sdf::ElementConstPtr activeLedsElem = _sdf->FindElement("active_leds");
-    // Read and push names in ledMode.activeLedNames
-  }
-
-  // Read the different steps involved in this LED Mode
-  if (!_sdf->HasElement("step"))
-  {
-    // Log an error msg
-    return std::nullopt;
-  }
-
-  sdf::ElementConstPtr stepElem = _sdf->FindElement("step");
-  while (stepElem)
-  {
-    LedModeStep ledModeStep;
-    // Read & push step configurations in ledMode.modeSequenceSteps
-  }
-
-  return ledMode;
-}
-```
+Internally, our `LedMode::fromSDF()` factory method can traverse the passed `sdf::ElementConstPtr` using the same `sdf::Element` API and return a fully constructed `LedMode` instance or `std::nullopt` if, say, a required child is missing.
 
 ### Getting our Visual & Light Entity IDs
 
@@ -350,32 +287,13 @@ public: static std::optional<Led> fromSDF(sdf::ElementConstPtr _sdf,
     led.scopedVisualName = _sdf->Get<std::string>("visual_name");
     std::unordered_set<Entity> visualEntities = gz::sim::entitiesFromScopedName(led.scopedVisualName, _ecm);
 
-    if (visualEntities.empty())
-    {
-      // Log an error msg
-    }
-    else
-    {
-      if (visualEntities.size() > 1)
-      {
-        // Log a warning msg
-      }
-
-      // Use the first found visual by default
-      led.ledVisualEntity = *visualEntities.begin();
-    }
+    // Set the led.ledVisualEntity based on the contents of the set
   }
 
-  // Retrieving the Light Entity
-  if (_sdf->HasElement("light_name"))
-  {
-    // Same as above but for the light
-  }
-
-  // Some parsing for the <default_state>
+  // Do the same for Light
 
   return led;
-}
+};
 ```
 
 ## Applying the LED Modes: ISystemPreUpdate
@@ -412,7 +330,7 @@ if (this->dataPtr->currentLedMode.activeLedNames.empty())
 }
 else
 {
-  // Do the same thing as above but only for currentLedMode.activeLedNames
+  // Do the same thing but only for currentLedMode.activeLedNames
 }
 ```
 
@@ -504,11 +422,7 @@ bool LedPluginPrivate::OnLedModeChange(const msgs::StringMsg &_req,
   auto ledModeIter = std::find_if(this->allLedModes.begin(), this->allLedModes.end(),
     [&](LedMode _mode)
     {
-      if (_mode.name == requestedModeName)
-      {
-        return true;
-      }
-      return false;
+      return _mode.name == requestedModeName
     });
 
   // If the requested mode was not found
@@ -527,5 +441,3 @@ bool LedPluginPrivate::OnLedModeChange(const msgs::StringMsg &_req,
   return true;
 }
 ```
-
-You can now trigger mode changes from the command line using `gz service` or from your ROS stack using the `ros_gz_bridge`.
