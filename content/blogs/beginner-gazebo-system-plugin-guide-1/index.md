@@ -8,7 +8,7 @@ series_order: 1
 ---
 
 {{< lead >}}
-This is a 2-part series. This part covers the basics, the next part covers plugin development. If you already know the basics, feel free to skip to the [next ↗](/blogs/beginner-gazebo-system-plugin-guide-2/).
+This is a 2-part series. This part covers the basics, the next part covers plugin development. If you already know the basics, feel free to skip to [Part 2 ↗](/blogs/beginner-gazebo-system-plugin-guide-2/).
 {{< /lead >}}
 
 {{< alert "lightbulb" >}}

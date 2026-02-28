@@ -8,16 +8,14 @@ series_order: 2
 ---
 
 {{< lead >}}
-This is part 2 of the series and assumes you have basic knowledge of Gazebo, System Plugins and Plugin Interfaces. If not, jump back to [part 1 ↗](blogs/beginner-gazebo-system-plugin-guide-1).
+This is Part 2 of the series & assumes you have basic knowledge of Gazebo, System Plugins and Plugin Interfaces. If not, jump back to [Part 1 ↗](/blogs/beginner-gazebo-system-plugin-guide-1/).
 {{< /lead >}}
 
 {{< alert "lightbulb" >}}
 **Note:** Whenever I say "Gazebo" in this blog, I am referring to the new Gazebo unless specified otherwise (Classic Gazebo).
 {{< /alert >}}
 
-If you are new to this series, let's do a quick recap:
-As mentioned before, I'll be taking my latest plugin, `gz_sim_led_plugin`, as a reference for all the explanations throughout this guide. 
-As far as plugins go, this is more towards the beginner-friendly side and I believe having a working example that allows you to see everything in action, helps in better understanding.
+As mentioned in Part 1, I'll be taking my latest plugin, `gz_sim_led_plugin`, as a reference for all the explanations throughout this guide. 
 
 Let's start right where we left off in our Part 1!
 
@@ -25,29 +23,30 @@ Let's start right where we left off in our Part 1!
 
 {{< github repo="jasmeet0915/gz_sim_led_plugin" showThumbnail=false >}}
 
-The idea behind this plugin is simple: we want to simulate LEDs/Indicators in Gazebo. Why? Because all industrial systems always have some kind of indicators (mostly LEDs) that tells the surrounding people what's happening behind the scenes. **For instance,** a robot might
+The idea behind this plugin is simple:
 
-* Use **blinking red LEDs** in **fault / emergency** mode. This lets operators know that the robot might not function correctly and human intervention is required
-* Use **blinking green LEDs** in **ready** mode. This tells operators that the robot can now take new missions.
-* Use **solid yellow LEDs** when its **low on battery**. This tells operators that the robot needs to be put on charge (or might go to auto charge, if available)
-* Use **pulsing blue LEDs** for on-going **docking/undocking operation**. This tells operators that the robot is performing precision maneuvers so caution is advised.
+We want to **simulate LEDs/Indicators** in Gazebo. **Why?** Because all industrial systems always have some kind of indicators (mostly LEDs) that lets you know what's happening behind the scenes. **For instance,** a robot might
 
-And so on. I hope you get the idea.
+* Use **blinking red LEDs** in **fault / emergency** mode to tell operators that the robot is not functioning correctly and human intervention is required
+* Use **blinking green LEDs** in **ready** mode to tell operators that the robot is *ready* to take missions.
+* Use **solid yellow LEDs** when its **low on battery** to tell operators that the robot needs to be put on charge (or might go to auto charge, if available)
+* Use **pulsing blue LEDs** for on-going **docking/undocking operation** to tell operators that the robot is performing precision maneuvers so caution is advised.
 
-{{<figure src="rm250_docking.gif" width=800 loading="eager" align="center" caption="Demo gif of the plugin in action showing 2 robots and an industrial tower lamp model each having different LED group with different modes.">}}
+And so on.
 
-One common pattern we see from the above examples is that the different LED patterns are generally associated with different **modes** or **states** of a robot.
-As a systems engineer in robotics, it would probably be a part of your job to make sure that you map such different modes of the robot to different patterns / configuration of these indicators. Therefore, like any piece of hardware, simulating LEDs provides the benefit of rapid prototyping, development and testing of such flows without the need of actual hardware.
+{{<figure src="rm250_docking.gif" width=800 loading="eager" align="center" caption="RM250 Robot from Peer Robotics using blinking red LEDs while docking with a trolley. Do checkout their website: https://peerrobotics.ai/">}}
 
-{{<figure src="gazebo_led_plugin_demo.gif" width=800 loading="eager" align="center" caption="RM250 Robot from Peer Robotics using blinking red LEDs while docking with a trolley. Do checkout their website: https://peerrobotics.ai/">}}
+Naturally, such LED patterns are generally associated with different internal **modes** or **states** of a robot and as a robotics systems engineer, it might be a part of your job to ensure such **mode <-> LED mappings**. Therefore, like any piece of hardware, it makes sense to simulate LEDs for development and testing of such flows without the need of actual hardware.
+
+{{<figure src="gazebo_led_plugin_demo.gif" width=800 loading="eager" align="center" caption="Demo gif of the plugin in action showing 2 robots and an industrial tower lamp model each having different LED group with different modes.">}}
 
 ## Configuring our Plugin: ISystemConfigure
 
-Before writing a plugin (or in fact any piece of software), it is essential to lay out how your potential users are going to use it. In our case, this will be through some configuration inside the `<plugin>` tags of an SDF file. This configuration is the first thing made available to our plugin in the form of a `sdf::ElementConstPtr` instance through the `ISystemConfigure` interface. It is essential that we define our possible SDF snippet for the plugin so that it can act as a blueprint for our `Configure()` implementation. Therefore, in this section we will think about what a user of our plugin might need to configure, come with a friendly SDF snippet for it and then parallely see how it is implemented
+Before writing a plugin (or in fact any piece of software), it is essential to lay out how your potential users are going to use it. In our case, this will be through some configuration inside the `<plugin>` tags of an SDF file. This configuration is made available to our plugin as a `sdf::ElementConstPtr` instance through the `ISystemConfigure` interface. Therefore, it is essential to define our possible SDF snippet for the plugin so that it can act as a blueprint for our `Configure()` implementation.
 
 ### Describing our LED Modes: SDF to C++ Struct
 
-As we have already established, different LED patterns/configurations are generally mapped to different modes/behaviours. Therefore, a potential user of our plugin would want to define a bunch of named `<modes>` each of which describes their own behaviour for a bunch of LEDs. This would look somewhat like:
+Any potential user of our plugin would want to define a bunch of named `<modes>` with their distinct behavior for a bunch of LEDs. The SDF snippet for it would look somewhat like:
 
 ```xml
 <plugin name="plugin_class_name_with_namespace" filename="plugin_shared_library_name">
@@ -61,15 +60,15 @@ As we have already established, different LED patterns/configurations are genera
 </plugin>
 ```
 
-For the LED behaviors during each mode, user would want to define different patterns or animations. These animations would have different `<steps>` having their own configurations of:
+To define the LED animations/patterns during each mode, we should have different `<steps>` having their own configurations of:
 
-- **Color:** The RGBA color for the mode's active LEDs during that step
-- **Intensity:** Since LEDs are supposed to be a light source, it would be good to have an intensity setting that allows the user to create dimming/gradient-based animations.
+- **Color:** RGBA color for the mode's active LEDs during that step.
+- **Intensity:** Intensity of the LED light sourcem to allow users to create dimming/gradient-based animations.
 - **On Time:** The duration for which this particular step stays "on".
 
-Chaining up a bunch of `<step>` with different configurations would allow any user to create numerous animations for any kind of `<mode>`. For `<mode>` with static LED colors, we can have a boolean `always_on` attribute for `<step>`that informs the plugin if a step has to stay on indefinitely.
+Chaining up a bunch of `<step>` with different configurations would allow users to create numerous animations for any kind of `<mode>`. For `<mode>` with static configuration, we can have a boolean `always_on` attribute for `<step>`that keeps the step indefinitely "on".
 
-Building upon this, we have an example SDF snippet that looks something like:
+Building upon this, we have our final mode description in SDF that looks something like:
 
 ```xml
 <plugin name="plugin_class_name_with_namespace" filename="plugin_shared_library_name">
@@ -100,7 +99,7 @@ Building upon this, we have an example SDF snippet that looks something like:
 </plugin>
 ```
 
-Structs in C++ are an obvious choice to represent our `<mode>` and `<step>` inside the plugin:
+**Structs in C++** are an obvious choice to represent our `<mode>` and `<step>` data inside the plugin:
 
 ```C++
 /// \brief Struct to define the LED Mode
@@ -137,11 +136,11 @@ struct LedModeStep
 
 ### Describing our LEDs: Which Entities to use?
 
-For describing our LEDs, we need to decide which entities in Gazebo would work best. The most obvious choice would be the [Light Entity](https://gazebosim.org/api/sim/9/classgz_1_1sim_1_1Light.html). However, light alone is not enough. Why? See the gif below:
+For describing our LEDs, we need to decide which entities in Gazebo would work best. The **most obvious choice** would be the [Light Entity](https://gazebosim.org/api/sim/9/classgz_1_1sim_1_1Light.html). **However, light alone is not enough.** Why? See the gif of a blinking light source in Gazebo below:
 
 <!-- Show a gif that shows a blinking light in a sample world only with LED not visible -->
 
-This gif shows a blinking light source on a simple robot model. Can you see the problem? Even though the blinking light changes illumination on surroundings, it does not represent an actual LED itself. When you look at any real world LEDs, they always have a diffuser on top to allow the light to spread out giving a softer uniform color (see the real robot gif above).
+Can you see the problem? Even though the blinking light changes illumination on surroundings, it **does not truly represent an actual LED itself.** When you look at any real world LEDs, they always have a diffuser on top to spread the light for softer look (see the real robot gif above).
 
 Currently, in Gazebo, we cannot simulate an actual diffuser. So what can we do? We can use the **Visual Entity** of our LED link and have it change its **Material** color in sync with the Light just like an actual diffuser. Therefore, we want our plugin to use both, Light and Visual entity, as an LED. So, LED descriptions in our plugin SDF would look like this:
 
