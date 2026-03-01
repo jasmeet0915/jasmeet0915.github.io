@@ -1,5 +1,5 @@
 ---
-title: "A Beginner's Guide to Making System Plugins for Gazebo - Part 1: Introductions"
+title: "Gazebo System Plugins for Beginners - Part 1: Introductions"
 weight: 1
 draft: false
 description: "This blog is a beginner's guide to writing system plugins for Gazebo Robotics Simulator"
