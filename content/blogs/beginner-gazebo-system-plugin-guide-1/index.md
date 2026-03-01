@@ -19,16 +19,18 @@ This is a 2-part series. This part covers the basics, the next part covers plugi
 
 Let's quickly address the question: "Why does it matter?"
 
-Simple said: **"You can literally do anything in Gazebo if you know how to develop plugins"**.
+Simply said: **"You can literally do anything in Gazebo if you know how to develop plugins"**.
 
 **Want to simulate the Martian Environment for developing your mars rover? Easy, [develop plugins]((https://www.youtube.com/watch?v=K7hV-B1lwzw&t=2566s))** that can generate terrain based on real elevation data, simulate day/light conditions and dust storms that also affect the sensors:
 {{<figure src="mars_curiosity_rover.gif" width=800 loading="eager" align="center" caption="Demo gif of our team's submission to the NASA Summer Sprint Simulation Challenge, 2024. You can watch the full showcase of the project from Gazebo Community Meeting from the link above">}}
 
-**Want to make Tom Cat Dance in Disco Party?** Develop an LED plugin and simulate a disco light with it:
-{{<figure src="featured.gif" width=800 loading="eager" align="center" caption="No explanation needed here ;)">}}
+**Want a Control Panel that lets you mock hardware interfaces of your industrial AMRs? Develop a GUI plugin** with buttons or toggles for interfaces such as GPIOs, Manual Charging, Hardware Emergency, etc. for your simulated robot:
+{{<figure src="mock_hardware_gui_plugin.png" width=800 loading="eager" align="center" caption="Screenshot of the Mock Hardware GUI Plugin I developed at Peer Robotics that allowed developers to, well, mock hardware interfaces and test all software flows in simulation">}}
 
-**Want your robots to simulate LEDs/Indicators like real ones in Gazebo? Well, you guessed it, [develop a plugin](https://github.com/jasmeet0915/gz_sim_led_plugin)** for it:
+**Want your robots to simulate LEDs/Indicators like real ones in Gazebo?** Or, maybe you want to **simulate a Disco Light for your virtual Dance Party? Well, you guessed it, [develop a plugin](https://github.com/jasmeet0915/gz_sim_led_plugin)** for it:
 {{<figure src="gazebo_led_plugin_demo.gif" width=800 loading="eager" align="center" caption="Demo gif of the plugin in action showing 2 robots and an industrial tower lamp model each having different LED group with different modes.">}}
+
+{{<figure src="featured.gif" width=800 loading="eager" align="center" caption="No explanation needed ;)">}}
 
 So clearly, Gazebo's System Plugins are important. Therefore, this blog series aims to provide a **"Beginner's guide to making System Plugins for Gazebo"** - from introductions to development details with handy insight here and there.
 
