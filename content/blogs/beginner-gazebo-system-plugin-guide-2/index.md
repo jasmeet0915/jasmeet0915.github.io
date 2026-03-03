@@ -1,6 +1,6 @@
 ---
 title: "Gazebo System Plugins for Beginners - Part 2: Making an LED Plugin "
-weight: 2
+weight: 3
 draft: false
 description: "This blog is a beginner's guide to writing system plugins for Gazebo Robotics Simulator"
 tags: ["blogs", "guide", "gazebo", "robotics", "system", "plugins", "led", "indicators", "simulation"]
