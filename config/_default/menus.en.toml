@@ -16,34 +16,34 @@
   weight = 10
 
 [[main]]
+  name = "Shop"
+  pageRef = "shop"
+  weight = 20
+
+[[main]]
   name = "Portfolio"
   pageRef = "portfolio"
-  weight = 20
+  weight = 30
 
 [[main]]
   name = "Projects"
   pageRef = "projects"
-  weight = 20
+  weight = 40
 
 [[main]]
   name = "Talks"
   pageRef = "talks"
-  weight = 30
-
-[[main]]
-  name = "Shop"
-  pageRef = "shop"
-  weight = 40
+  weight = 50
 
 [[main]]
   name = "Artworks"
   pageRef = "artworks"
-  weight = 50
+  weight = 60
 
 [[main]]
   name = "Contact"
   pageRef = "contact"
-  weight = 60
+  weight = 70
 
 # -- Footer Menu --
 # The footer menu is displayed at the bottom of the page, just before
