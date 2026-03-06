@@ -10,7 +10,7 @@ cascade:
 ---
 
 {{< lead >}}
-Sharing the things I make (or occasionally break), but definitely learn from
+Things I design, prototype, and sometimes turn into products
 {{< /lead >}}
 
 ---
