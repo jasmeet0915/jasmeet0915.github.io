@@ -6,7 +6,7 @@
 # https://blowfish.page/blogs/configuration/#theme-parameters
 
 colorScheme = "custom"
-defaultAppearance = "dark" # valid options: light or dark
+defaultAppearance = "light" # valid options: light or dark
 autoSwitchAppearance = true
 
 enableA11y = false
@@ -23,7 +23,7 @@ disableImageOptimizationMD = false
 disableTextInHeader = false
 # backgroundImageWidth = 1200
 
-defaultBackgroundImage = "/img/lavalamp.svg"
+defaultBackgroundImage = ""
 defaultFeaturedImage = "/img/featured.svg"
 defaultSocialImage = "/img/transparent_ai_profile.png"
 
