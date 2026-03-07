@@ -49,7 +49,7 @@ product:
         alt: "Keychains with different colors"
       - src: "keychain-on-bag.jpg"
         alt: "Keychain attached on backpack"
-      - src: "dj-event.gif"
+      - src: "color-options-1.jpg"
         alt: "Live from DJ Event"
       - src: "shipping.jpg"
         alt: "Shipping for Events"
@@ -77,16 +77,14 @@ product:
         value: "<~30g"
       - label: "Colors"
         value: "Multiple Color Combinations available"
-      - label: "Spin Time"
-        value: "Depends on how hard you spin :p"
 
   testimonials:
     label: "Love from Customers"
     heading: "What people are saying"
     items:
-      - quote: "These keychains were the highlight of our college fest. Everyone wanted one!"
-        name: "Placeholder Name"
-        role: "College Fest Organizer"
+      - quote: "The keychains showed up just in time for my set. People loved them, the spinning turntable was an instant hit."
+        name: "Amanjeet Singh (@droidsingh)"
+        role: "Part-time DJ, Full Time Software Engineer"
         image: "dj-event.gif"
       - quote: "Handed these out at a gig — people were fidgeting with them all night. Great conversation starter."
         name: "Placeholder Name"
