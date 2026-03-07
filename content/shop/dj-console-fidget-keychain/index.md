@@ -1,5 +1,5 @@
 ---
-title: "The Best 3D Printed Giveaways for your Music Events"
+title: "The Best 3D Printed Merch for your Music Events"
 description: "Custom 3D printed DJ console keychains with spinning turntable discs. Perfect for music events, DJs, and festival giveaways."
 layout: product
 showHero: false
@@ -9,6 +9,7 @@ showDate: false
 showReadingTime: false
 showAuthor: false
 draft: false
+tags: ["shop", "event merch", "3D printing", "keychain", "fidget", "collectible", "music", "DJ", "gift"]
 
 product:
   category: "3D Printed Merch"
