@@ -80,6 +80,21 @@ product:
       - label: "Spin Time"
         value: "Depends on how hard you spin :p"
 
+  testimonials:
+    label: "Love from Customers"
+    heading: "What people are saying"
+    items:
+      - quote: "These keychains were the highlight of our college fest. Everyone wanted one!"
+        name: "Placeholder Name"
+        role: "College Fest Organizer"
+        image: "dj-event.gif"
+      - quote: "Handed these out at a gig — people were fidgeting with them all night. Great conversation starter."
+        name: "Placeholder Name"
+        role: "DJ / Producer"
+      - quote: "Perfect merch for our music collective. The quality is surprisingly solid for a 3D print."
+        name: "Placeholder Name"
+        role: "Music Collective Lead"
+
   finalCta:
     heading: "Ready to order?"
     description: "Send your event details, quantity, and color preferences - I'll get back with a quote."
