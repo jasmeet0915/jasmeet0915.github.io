@@ -8,95 +8,69 @@ series_order: 1
 ---
 
 {{< lead >}}
-Taking bulk orders for this Keychain + Fidget combo. Order some for your music events: [Order Now ↗]().
+Taking bulk orders for this Keychain + Fidget combo. Order some for your music events: [Order Now ↗](/shop/dj-console-fidget-keychain/).
 {{< /lead >}}
 
-So there I was, chilling, using Copilot (hence the chilling :p) to write GitHub action workflows for automated testing of our ROS 2 workspace (next blog topic, maybe 🤔) at [EightVectors](https://www.eightvectors.com/) when I got an interesting phone call from my Software Engineer turning into a DJ brother.
+## First, Let's Set the Stage (pun intended :p)
 
-## But First, Let's Set the Stage (pun intended :p)
+So my brother, [@droidsingh](https://www.instagram.com/droid_singh/) (also goes by the name [Amanjeet Singh](https://www.amanjeet.me/)), is one of the Founding Engineers at [maestro.dev](https://maestro.dev/) by day (sometimes night as well - timezones, am I right) and a full time music lover. As a hobby, he decided to start DJing almost an year back.
 
-### The DJ
+It was around that time when I too joined him in the fully remote worker club as a Robotics Engineer at EightVectors. Rather than working from home, me (sometimes) and my brother (literally everyday) preferred to work from different cafes near our home. One of those cafes, [FES Cafe](https://www.instagram.com/fescafe_desserts/), is well known for their exceptional cookies and weekly coffee raves accompanied by an hour so long DJ session. Seeing this as an opportunity to level up his DJing skills, he volunteered to play during one of those raves.
 
-So my brother, [@droidsingh](https://www.instagram.com/droid_singh/) (also goes by the name [Amanjeet Singh](https://www.amanjeet.me/)), is the Founding Engineer at [maestro.dev](https://maestro.dev/) by day (sometimes night as well - timezones, am I right) and a full time music lover. To materialze his love for music, he decided to start DJing almost an year back.
+But, collectively, we wanted to take this up a notch and make it more than *just another weekly DJ session*.
 
-### The Venue
+## What makes a Music Event Good?
 
-I recently joined my brother in the fully remote worker club and soon realized - even though you work remotely, it helps to leave the comfort of your house to maintain your sanity. Generally, both of use like to go and work out of different cafes near our house. Out of the numerous cafes we have tried, FES Cafe is up there with its excellent vibe, service and heavenly cookies. The FES Cafe at Galleria Market, Gurugram is famous for their weekly coffee raves and DJ evenings.
+Well...for starters: good music, duh.
 
-### The Maker
+But that is just one part (a very major one) of it. Good events are not just about the music. They’re about the whole experience — the vibe, the venue, the crowd. And if at the end of all that, you have something tangible to remember the event by, **its the cherry on top**. I still have the LED band from a concert of one of my favorite artists from 2 years back as it helps me remember the day and show whenever I look at it.
 
-And then there's me.
+Luckily, the vibe, the venue, the crowd were all in the good hands of FES Cafe and the DJ @droidsingh but the last part?
 
-I like making things. Sometimes useful, sometimes questionable, but always fun to build. Most of the time that involves some combination of CAD, 3D printing, and trying to convince myself that the next idea is definitely not over-engineered.
+This is where me and my hobby of 3D printing comes in. 
 
-So when my brother called and mentioned his upcoming DJ set at the FES weekly coffee rave, the obvious question was:
+[All might I am here Gif]
 
-*"Can we make something cool for it?"*
+## Engineering the Cherry on Top
 
-Something small. Something memorable. Something people could take home.
+So, the goal was simple: We need,
 
-And of course... something that spins.
+*Something small. Something memorable. And something useful that people wont throwaway the moment they leave the event.*
 
-## Engineering the Experience
+So like any other 3D printing guy, I started doomscrolling on [Thingiverse](https://www.thingiverse.com/) for inspirations. And then suddenly it clicked.
 
-Good events are not just about the music. They’re about the whole experience — the vibe, the venue, the crowd. Something memorable.
+What if we make a keychain that looks like a miniature DJ console? This would be a 100% match with the event's theme.
 
-I still remember the one of the best parts of the Diljit Dosanjh concert I attended back in 2024, was the RF based light bands that the whole crowd had which used to glow up in sync with different colors and effects.
+And then, suddenly, it clicked again.
 
-Add photo from Diljit concert here.
+What if we make the disc on the miniature console rotatable like a real console so the keychain can als doubles as a fidgeting toy?
 
-So, the goal was simple: make a small physical thing that people could take home and remember the night by.
+[Mind blowing gif]
 
-Preferably something more interesting than a sticker.
+And this is how the idea for the project was born.
 
-## The Dropped Ideas
+[Add spinning keychain gif here from shop page]
 
-The first idea was… ambitious.
+### Idea to Visual Reference
 
-A **3D POV display inside a fishbowl**.
+The requirements were simple:
 
-The plan was to take a **64×64 LED matrix**, spin it at high speed, and display music-reactive animations. The persistence of vision would create a floating 3D display inside the bowl.
+- It should look like a **DJ console**
+- It should be **small enough to be a keychain**
+- It should look **nice enough that people would actually keep it**
+- And if possible… it should **spin**
 
-Very cool.
+To quickly visualize this idea, I generated a **concept image** using an AI image prompt. That image became the reference for what the final keychain should roughly look like — a miniature DJ console with a spinning turntable.
 
-Also very unrealistic to build in just a few days.
+Nothing fancy at this stage, just something to help translate the idea in my head into something visual.
 
-So that idea went straight into the **“maybe someday”** folder.
+### Visual Reference to CAD
 
-## The Final Idea
+With the reference image ready, it was time to fire up **Fusion360**.
 
-After abandoning the spinning LED fishbowl of doom, the requirements became much simpler:
+It had been a while since I last opened it, but muscle memory kicked in quickly.
 
-- small
-- memorable
-- fun to play with
-- easy to produce in bulk
-
-And then it clicked.
-
-A **mini DJ console keychain**.
-
-But not just a keychain — the turntable should actually **spin**.
-
-Which naturally meant using a **real ball bearing**.
-
-### Idea to Concept
-
-The concept was pretty straightforward:
-
-A tiny DJ console shaped keychain with:
-
-- a spinning turntable
-- customizable colors
-- something that people could keep after the event
-
-Basically a **souvenir + fidget toy combo**.
-
-### Concept to Design
-
-The design process started in CAD.
-
-The keychain was split into three simple parts:
+The design was kept intentionally simple and split into three parts:
 
 1. **Console base**
 2. **Spinning disc**
@@ -106,18 +80,61 @@ The disc would sit on a **22×7×8 mm bearing**, which is a very common size and
 
 The base would hold the bearing with a **snap-fit**, and the rear cap would lock everything together.
 
-The goal was to keep the assembly **simple and glue-free**.
+And then came the usual CAD routine:
 
-### Design to 3D Print
+- add a **fillet here**
+- add a **chamfer there**
+- tweak a **tolerance somewhere else**
 
-Once the design looked good in CAD, it was time for the real test — printing.
+After a few small adjustments and making sure everything looked printable, the design was ready.
 
-A few iterations later, the final version printed cleanly and the spinning disc worked exactly as intended.
+### Design Iteration
 
-Which meant it was time to start printing **a lot of them**.
+The first version used a **rear cap to lock the bearing in place**.
 
-Thankfully the printer did most of the work.
+But after testing the initial print, it felt unnecessarily complicated.
 
+So the design was simplified.
+
+The final version used a **snap-fit turntable disc with a small peg** that fits inside the **inner ring of the bearing**, removing the need for the rear cap entirely.
+
+Fewer parts. Easier assembly. Problem solved.
+
+### From CAD to Print
+
+For printing, I reached out to a friend who owns a **Bambu Lab A1**.
+
+Huge shoutout to **[friend name here]** for helping get these printed in time.
+
+A few prints later, the design worked exactly as intended:
+
+- the bearing fit snugly
+- the disc spun smoothly
+- and the keychain looked surprisingly good for something designed in a couple of evenings.
+
+Once everything checked out, it was time to start printing **a small pile of them**.
+
+### Assembly Night (a.k.a. the Stealth Mission)
+
+The night before the event, we sat down to assemble around **50 keychains**.
+
+Each one required pressing the bearing into the console base.
+
+Which normally would involve a **small hammer tap**.
+
+The only problem?
+
+It was late at night.
+
+And repeatedly hammering metal bearings into plastic parts is not exactly the quietest activity.
+
+So the entire assembly process turned into a **stealth mission**.
+
+Carefully tapping the bearings in, trying to keep the noise down and avoid any complaints from the neighbours.
+
+After a while we got into a rhythm and finished assembling the whole batch.
+
+By the end of it, we had a table full of **tiny spinning DJ consoles**, ready for the next day's coffee rave.
 ## The Event
 
 The event was the **weekly coffee rave at FES Cafe in Galleria Market, Gurugram**.
