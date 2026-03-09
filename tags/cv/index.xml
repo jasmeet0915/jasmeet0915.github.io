@@ -30,6 +30,34 @@ class="bg-primary-500 dark:bg-primary-300 text-neutral-50 dark:text-neutral-700 
 &lt;/div&gt;
 &lt;div class="block p-6 rounded-lg shadow-2xl flex-1 ms-6 mb-10 break-words"&gt;
 &lt;div class="flex justify-between"&gt;
+&lt;h2 class="mt-0"&gt;Robotics Engineer - Eight Vectors&lt;/h2&gt;
+&lt;h3 class=""&gt;
+&lt;span class="flex cursor-pointer"&gt;
+&lt;span
+class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400"&gt;
+Nov&amp;#39;24 - Present
+&lt;/span&gt;
+&lt;/span&gt;
+&lt;/h3&gt;
+&lt;/div&gt;
+&lt;h4 class="mt-0"&gt;
+🌐 Remote
+&lt;/h4&gt;
+&lt;div class="mb-6"&gt;
+Working as a Robotics Engineer with a Singapore-based startup, Eight Vectors. Leading the development of VSLAM-based forklift RTLS and driver assistance systems.
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;div class="flex"&gt;
+&lt;div
+class="bg-primary-500 dark:bg-primary-300 text-neutral-50 dark:text-neutral-700 min-w-[30px] h-8 text-2xl flex items-center justify-center rounded-full ltr:-ml-12 rtl:-mr-[79px] mt-5"&gt;
+&lt;span class="relative block icon"&gt;&lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"&gt;
+&lt;path fill="currentColor" d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/&gt;&lt;/svg&gt;&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="block p-6 rounded-lg shadow-2xl flex-1 ms-6 mb-10 break-words"&gt;
+&lt;div class="flex justify-between"&gt;
 &lt;h2 class="mt-0"&gt;Robotics Engineer - Peer Robotics&lt;/h2&gt;
 &lt;h3 class=""&gt;
 &lt;span class="flex cursor-pointer"&gt;
@@ -131,7 +159,7 @@ Jun&amp;#39;23 - Sep&amp;#39;23
 &lt;div class="mb-6"&gt;
 I was selected by the Gazebo team at Open Robotics for GSoC 2023 to work on the project "Automatic Calculation of Moments if Inertia using SDFormat Links". The project aimed at developing a pipeline for automatic computation of Mass and Moments of Inertia for the SDFormat library which is used by Gazebo and other simulators like Drake for representing Robot Descriptions using XML.
 &lt;div class="github-card-wrapper"&gt;
-&lt;a id="github-2aa318e1c13941086ac4fe8dcddebabc" target="_blank" href="https://github.com/jasmeet0915/GSoC23-OpenRobotics" class="cursor-pointer"&gt;
+&lt;a id="github-cda844441b8e99e39834430dba99a162" target="_blank" href="https://github.com/jasmeet0915/GSoC23-OpenRobotics" class="cursor-pointer"&gt;
 &lt;div
 class="w-full md:w-auto p-0 m-0 border border-neutral-200 dark:border-neutral-700 border rounded-md shadow-2xl"&gt;&lt;div class="w-full md:w-auto pt-3 p-5"&gt;
 &lt;div class="flex items-center"&gt;
@@ -140,11 +168,11 @@ class="w-full md:w-auto p-0 m-0 border border-neutral-200 dark:border-neutral-70
 &lt;/span&gt;
 &lt;/span&gt;
 &lt;div
-id="github-2aa318e1c13941086ac4fe8dcddebabc-full_name"
+id="github-cda844441b8e99e39834430dba99a162-full_name"
 class="m-0 font-bold text-xl text-neutral-800 decoration-primary-500 hover:underline hover:underline-offset-2 dark:text-neutral"&gt;
 jasmeet0915/GSoC23-OpenRobotics
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p id="github-2aa318e1c13941086ac4fe8dcddebabc-description" class="m-0 mt-2 text-md text-neutral-800 dark:text-neutral"&gt;
+&lt;p id="github-cda844441b8e99e39834430dba99a162-description" class="m-0 mt-2 text-md text-neutral-800 dark:text-neutral"&gt;
 This repo outlines the work that I did with Open Robotics during GSoC'23 on the feature &amp;lsquo;Automatically Calculating Moments of Inerita of SDFormat Link&amp;rsquo;
 &lt;/p&gt;</description></item></channel></rss>

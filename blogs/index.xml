@@ -1,4 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blogs on Jasmeet Singh</title><link>https://localhost:1313/blogs/</link><description>Recent content in Blogs on Jasmeet Singh</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>jasmeet0915@gmail.com (Jasmeet Singh)</managingEditor><webMaster>jasmeet0915@gmail.com (Jasmeet Singh)</webMaster><copyright>Copyright © 2026 Jasmeet Singh</copyright><atom:link href="https://localhost:1313/blogs/index.xml" rel="self" type="application/rss+xml"/><item><title>Gazebo System Plugins for Beginners - Part 1: Introductions</title><link>https://localhost:1313/blogs/beginner-gazebo-system-plugin-guide-1/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>jasmeet0915@gmail.com (Jasmeet Singh)</author><guid>https://localhost:1313/blogs/beginner-gazebo-system-plugin-guide-1/</guid><description>&lt;div class="lead text-neutral-500 dark:text-neutral-400 !mb-9 text-xl"&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blogs on Jasmeet Singh</title><link>https://localhost:1313/blogs/</link><description>Recent content in Blogs on Jasmeet Singh</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>jasmeet0915@gmail.com (Jasmeet Singh)</managingEditor><webMaster>jasmeet0915@gmail.com (Jasmeet Singh)</webMaster><copyright>Copyright © 2026 Jasmeet Singh</copyright><atom:link href="https://localhost:1313/blogs/index.xml" rel="self" type="application/rss+xml"/><item><title>Making The Perfect 3D Printed Giveaway for my Brother's DJ Event</title><link>https://localhost:1313/blogs/dj-console-keychain-event/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>jasmeet0915@gmail.com (Jasmeet Singh)</author><guid>https://localhost:1313/blogs/dj-console-keychain-event/</guid><description>&lt;div class="lead text-neutral-500 dark:text-neutral-400 !mb-9 text-xl"&gt;
+Taking bulk orders for this Keychain + Fidget combo. Order some for your music events: &lt;a
+href="https://localhost:1313/shop/dj-console-fidget-keychain/"&gt;Order Now ↗&lt;/a&gt;.
+&lt;/div&gt;
+&lt;h2 class="relative group"&gt;First, Let&amp;rsquo;s Set the Stage (pun intended :p)
+&lt;div id="first-lets-set-the-stage-pun-intended-p" class="anchor"&gt;&lt;/div&gt;
+&lt;span
+class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none"&gt;
+&lt;a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700 !no-underline" href="#first-lets-set-the-stage-pun-intended-p" aria-label="Anchor"&gt;#&lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;
+&lt;p&gt;So my brother, &lt;a
+href="https://www.instagram.com/droid_singh/"
+target="_blank"
+&gt;@droidsingh&lt;/a&gt; (also known as &lt;a
+href="https://www.amanjeet.me/"
+target="_blank"
+&gt;Amanjeet Singh&lt;/a&gt;), is one of the Founding Engineers at &lt;a
+href="https://maestro.dev/"
+target="_blank"
+&gt;maestro.dev&lt;/a&gt; by day (sometimes night as well - timezones, am I right) &amp;amp; a full time music lover. As a hobby, he decided to start DJing almost a year back.&lt;/p&gt;</description><media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://localhost:1313/blogs/dj-console-keychain-event/featured.jpg"/></item><item><title>Gazebo System Plugins for Beginners - Part 1: Introductions</title><link>https://localhost:1313/blogs/beginner-gazebo-system-plugin-guide-1/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>jasmeet0915@gmail.com (Jasmeet Singh)</author><guid>https://localhost:1313/blogs/beginner-gazebo-system-plugin-guide-1/</guid><description>&lt;div class="lead text-neutral-500 dark:text-neutral-400 !mb-9 text-xl"&gt;
 This is a 2-part series. This part covers the basics, the next part covers plugin development. If you already know the basics, feel free to skip to &lt;a
 href="https://localhost:1313/blogs/beginner-gazebo-system-plugin-guide-2/"&gt;Part 2 ↗&lt;/a&gt;.
 &lt;/div&gt;
