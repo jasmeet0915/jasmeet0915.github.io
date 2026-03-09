@@ -20,7 +20,7 @@ product:
       url: "#order"
       primary: true
     - label: "💬 Chat on WhatsApp"
-      url: "https://wa.me/YOURNUMBER"
+      url: "https://wa.me/8802327251"
       external: true
 
   intro:
