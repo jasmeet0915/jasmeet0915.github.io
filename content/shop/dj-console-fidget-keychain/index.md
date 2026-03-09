@@ -90,9 +90,10 @@ product:
         name: "Kartik Rana"
         role: "Event Attendee"
         image: "kartik_rana_testi.jpeg"
-      - quote: "Perfect merch for our music collective. The quality is surprisingly solid for a 3D print."
-        name: "Placeholder Name"
-        role: "Music Collective Lead"
+      - quote: "Got this at the coffee rave at FES Cafe. Now it’s on my college bag as a keychain, and honestly the best time pass is spinning the disc during my 2-hour metro commute."
+        name: "Deepansh Aggarwal"
+        role: "Event Attendee"
+        image: "deepansh_testi.gif"
 
   finalCta:
     heading: "Ready to order?"
