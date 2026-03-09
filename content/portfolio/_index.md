@@ -22,6 +22,10 @@ For more detailed descriptions: [Download CV ↓](https://drive.google.com/uc?ex
 
 {{< timeline >}}
 
+{{< timelineItem icon="code" header="Robotics Engineer - Eight Vectors" badge="Nov'24 - Present" subheader="🌐 Remote" >}}
+Working as a Robotics Engineer with a Singapore-based startup, Eight Vectors. Leading the development of VSLAM-based forklift RTLS and driver assistance systems.
+{{< /timelineItem >}}
+
 {{< timelineItem icon="code" header="Robotics Engineer - Peer Robotics" badge="Oct'23 - Jul'25" subheader="📍 On-site, Gurugram, India" >}}
 As part of the Firmware team, my work was centred around the development of the autonomy stack (controls, motion planning for docking & navigation, simulation, automated calibration) of the various AMR platforms at Peer Robotics including the <a href="https://www.peerrobotics.ai/products/rm-series" target="_blank">RM250</a>, <a href="https://www.peerrobotics.ai/products/rm-series" target="_blank">RM500</a> and <a href="https://www.peerrobotics.ai/products/peer-series/peer-3000" target="_blank">Peer300</a>.
 {{< /timelineItem >}}

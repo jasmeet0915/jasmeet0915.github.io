@@ -1,6 +1,6 @@
 ---
 title: "Programming a Non-Programmable ESP8266 Board"
-weight: 3
+weight: 4
 draft: false
 description: "See how I used the ESP module from a more or less useless and limited board for my own project"
 tags: ["blogs", "ESP8266", "IOT", "boot modes", "programming", "bolt IOT", "RGB", "Addressable LEDs", "DIY", "WLED", "shelf lights"]

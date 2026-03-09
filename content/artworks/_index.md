@@ -10,11 +10,11 @@ background: "/img/background.jpg"
 ---
 
 {{< lead >}}
-I’ve always loved art in every form — sketching, painting, photography, 3D printing, and anything else I can get my hands on.
+I’ve always loved art in every form - sketching, painting, photography, 3D printing, and anything else I can get my hands on.
 
-I’m never afraid to enhance, improvise, or sometimes even ruin somethings in the process — the countless pairs of shoes I destroyed while trying to master hydro-dipping still haunt my dreams from time to time. 
+I’m never afraid to enhance, improvise, or sometimes even ruin somethings in the process (the countless pairs of shoes I destroyed while trying to master hydro-dipping still haunt my dreams from time to time 😨). 
 
-For me, art is play, exploration, and a bit of chaos — and I am here for it!
+For me, art is play, exploration, and a bit of chaos and I am here for it!
 {{< /lead >}}
 
 {{< alert "circle-info" >}}

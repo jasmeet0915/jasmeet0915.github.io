@@ -23,7 +23,7 @@ disableImageOptimizationMD = false
 disableTextInHeader = false
 # backgroundImageWidth = 1200
 
-defaultBackgroundImage = "/img/lavalamp.svg"
+defaultBackgroundImage = ""
 defaultFeaturedImage = "/img/featured.svg"
 defaultSocialImage = "/img/transparent_ai_profile.png"
 
