@@ -19,8 +19,8 @@ product:
     - label: "📩 Request Bulk Order"
       url: "#order"
       primary: true
-    - label: "💬 Chat on WhatsApp"
-      url: "/whatsapp"
+    - label: "💬 DM on Instagram"
+      url: "https://www.instagram.com/debounsingh/"
       external: true
 
   intro:
@@ -95,7 +95,7 @@ product:
         role: "Event Attendee"
         image: "kartik_rana_testi.jpeg"
       - quote: "Got this at the coffee rave at FES Cafe. Now it’s on my college bag as a keychain, and honestly the best time pass is spinning the disc during my 2-hour metro commute."
-        name: "Deepansh Aggarwal"
+        name: "Deepansh Goel"
         role: "Event Attendee"
         image: "deepansh_testi.gif"
 
@@ -107,7 +107,7 @@ product:
         url: "mailto:jasmeet0915@gmail.com?subject=DJ%20Console%20Keychain%20Bulk%20Order"
         primary: true
         external: true
-      - label: "💬 WhatsApp"
-        url: "/whatsapp"
+      - label: "💬 DM on Instagram"
+        url: "https://www.instagram.com/debounsingh/"
         external: true
 ---
