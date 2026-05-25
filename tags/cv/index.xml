@@ -30,12 +30,12 @@ class="bg-primary-500 dark:bg-primary-300 text-neutral-50 dark:text-neutral-700 
 &lt;/div&gt;
 &lt;div class="block p-6 rounded-lg shadow-2xl flex-1 ms-6 mb-10 break-words"&gt;
 &lt;div class="flex justify-between"&gt;
-&lt;h2 class="mt-0"&gt;Robotics Engineer - Eight Vectors&lt;/h2&gt;
+&lt;h2 class="mt-0"&gt;Robotics Engineer (Contractor) - Eight Vectors&lt;/h2&gt;
 &lt;h3 class=""&gt;
 &lt;span class="flex cursor-pointer"&gt;
 &lt;span
 class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400"&gt;
-Nov&amp;#39;24 - Present
+Nov&amp;#39;25 - May&amp;#39;26
 &lt;/span&gt;
 &lt;/span&gt;
 &lt;/h3&gt;
@@ -44,7 +44,7 @@ Nov&amp;#39;24 - Present
 🌐 Remote
 &lt;/h4&gt;
 &lt;div class="mb-6"&gt;
-Working as a Robotics Engineer with a Singapore-based startup, Eight Vectors. Leading the development of VSLAM-based forklift RTLS and driver assistance systems.
+Working as a Robotics Engineer with a Singapore-based startup, Eight Vectors. Led the development of a pilot-ready ROS 2-based intelligent driver assistance systems (iDAS) for industrial MHEs (forklifts, reach trucks, order pickers). Also worked with a Zurich-based company (Anybotics) as a service provider for ROS 1 -&gt; ROS 2 migration of their robotics software stack.
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
