@@ -10,15 +10,15 @@ title = "Jasmeet Singh"
   dateFormat = "2 January 2006"
   logo = "img/transparent_ai_profile.png"
   secondaryLogo = "img/transparent_ai_profile.png"
-  description = "Robotics Engineer | Engineering Motion, Simulating Reality."
+  description = "Robotics Engineer | Simulation · Autonomy · Systems · Infra · Rapid Prototyping"
   copyright = "Copyright © { year } Jasmeet Singh"
 
 [params.author]
   name = "Jasmeet Singh"
   email = "jasmeet0915@gmail.com"
   image = "img/profile_photo.jpg"
-  headline = "Robotics Engineer | Engineering Motion, Simulating Reality."
-  bio = "Robotics Engineer | Engineering Motion, Simulating Reality."
+  headline = "Robotics Engineer | Simulation · Autonomy · Systems · Infra · Rapid Prototyping"
+  bio = "Robotics Engineer | Simulation · Autonomy · Systems · Infra · Rapid Prototyping"
   links = [
     { github = "https://github.com/jasmeet0915" },
     { linkedin = "https://www.linkedin.com/in/jasmeetsingh2911/"},
