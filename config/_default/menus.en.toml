@@ -1,7 +1,7 @@
 # -- Main Menu --
 # The main menu is displayed in the header at the top of the page.
 # Acceptable parameters are name, pageRef, page, url, title, weight.
-# 
+#
 # The simplest menu configuration is to provide:
 #   name = The name to be displayed for this menu link
 #   pageRef = The identifier of the page or section to link to
@@ -16,34 +16,41 @@
   weight = 10
 
 [[main]]
-  name = "Shop"
-  pageRef = "shop"
-  weight = 20
-
-[[main]]
   name = "Portfolio"
   pageRef = "portfolio"
-  weight = 30
+  weight = 20
 
 [[main]]
   name = "Projects"
   pageRef = "projects"
-  weight = 40
+  weight = 30
 
 [[main]]
   name = "Talks"
   pageRef = "talks"
+  weight = 40
+
+[[main]]
+  identifier = "side-quests"
+  name = "Side Quests"
   weight = 50
+
+[[main]]
+  name = "Shop"
+  pageRef = "shop"
+  parent = "side-quests"
+  weight = 1
 
 [[main]]
   name = "Artworks"
   pageRef = "artworks"
-  weight = 60
+  parent = "side-quests"
+  weight = 2
 
 [[main]]
-  name = "Contact"
-  pageRef = "contact"
-  weight = 70
+  name = "Work with Me"
+  pageRef = "work-with-me"
+  weight = 60
 
 # -- Footer Menu --
 # The footer menu is displayed at the bottom of the page, just before
