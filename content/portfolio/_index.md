@@ -22,8 +22,8 @@ For more detailed descriptions: [Download CV ↓](https://drive.google.com/uc?ex
 
 {{< timeline >}}
 
-{{< timelineItem icon="code" header="Robotics Engineer - Eight Vectors" badge="Nov'24 - Present" subheader="🌐 Remote" >}}
-Working as a Robotics Engineer with a Singapore-based startup, Eight Vectors. Leading the development of VSLAM-based forklift RTLS and driver assistance systems.
+{{< timelineItem icon="code" header="Robotics Engineer (Contractor) - Eight Vectors" badge="Nov'25 - May'26" subheader="🌐 Remote" >}}
+Working as a Robotics Engineer with a Singapore-based startup, Eight Vectors. Led the development of a pilot-ready ROS 2-based intelligent driver assistance systems (iDAS) for industrial MHEs (forklifts, reach trucks, order pickers). Also worked with a Zurich-based company (Anybotics) as a service provider for ROS 1 -> ROS 2 migration of their robotics software stack.
 {{< /timelineItem >}}
 
 {{< timelineItem icon="code" header="Robotics Engineer - Peer Robotics" badge="Oct'23 - Jul'25" subheader="📍 On-site, Gurugram, India" >}}
